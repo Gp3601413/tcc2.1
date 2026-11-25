@@ -14,6 +14,7 @@ public class AppDbContext : DbContext
     public DbSet<ServicoMecanica> MecanicaServicos => Set<ServicoMecanica>();
     public DbSet<HorarioMecanica> MecanicaHorarios => Set<HorarioMecanica>();
     public DbSet<Contato> Contatos => Set<Contato>();
+    public DbSet<Agendamento> Agendamentos => Set<Agendamento>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -128,6 +129,25 @@ public class AppDbContext : DbContext
             entity.HasIndex(e => new { e.MecanicaId, e.DiaSemana }).IsUnique();
             entity.HasOne(e => e.Mecanica).WithMany(m => m.Horarios)
                   .HasForeignKey(e => e.MecanicaId).OnDelete(DeleteBehavior.Cascade);
+        });
+
+
+        modelBuilder.Entity<Agendamento>(entity =>
+        {
+            entity.ToTable("agendamentos");
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Id).HasColumnName("id").HasColumnType("char(36)");
+            entity.Property(e => e.UsuarioId).HasColumnName("usuario_id").HasColumnType("char(36)");
+            entity.Property(e => e.MecanicaId).HasColumnName("mecanica_id").HasColumnType("char(36)");
+            entity.Property(e => e.Servico).HasColumnName("servico").HasMaxLength(180).IsRequired();
+            entity.Property(e => e.DataHora).HasColumnName("data_hora").HasColumnType("datetime");
+            entity.Property(e => e.Observacoes).HasColumnName("observacoes").HasColumnType("text");
+            entity.Property(e => e.Status).HasColumnName("status").HasMaxLength(20).IsRequired();
+            entity.Property(e => e.CriadoEm).HasColumnName("criado_em");
+            entity.HasIndex(e => new { e.MecanicaId, e.DataHora });
+            entity.HasIndex(e => new { e.UsuarioId, e.DataHora });
+            entity.HasOne(e => e.Usuario).WithMany().HasForeignKey(e => e.UsuarioId).OnDelete(DeleteBehavior.Cascade);
+            entity.HasOne(e => e.Mecanica).WithMany().HasForeignKey(e => e.MecanicaId).OnDelete(DeleteBehavior.Cascade);
         });
 
         modelBuilder.Entity<Contato>(entity =>
