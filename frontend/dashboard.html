@@ -11,6 +11,7 @@
     <script defer src="js/sfx-core.js"></script>
     <script defer src="js/auth-guard.js"></script>
     <script defer src="js/dashboard.js"></script>
+    <script defer src="js/agendamentos-cliente.js"></script>
 </head>
 <body>
     
@@ -232,34 +233,38 @@
                     <h3>Agendar Serviço</h3>
                     <form id="formAgendamento">
                         <div class="form-group">
-                            <label>Tipo de Serviço</label>
-                            <select>
-                                <option>Revisão Completa</option>
-                                <option>Troca de Óleo</option>
-                                <option>Verificação da Bateria</option>
-                                <option>Alinhamento e Balanceamento</option>
+                            <label for="agendamentoServico">Tipo de serviço</label>
+                            <select id="agendamentoServico" required>
+                                <option value="">Selecione um serviço</option>
+                                <option>Revisão de veículo elétrico</option>
+                                <option>Diagnóstico da bateria</option>
+                                <option>Verificação do sistema térmico</option>
+                                <option>Diagnóstico elétrico</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Data</label>
-                            <input type="date" />
+                            <label for="agendamentoDataHora">Data e horário</label>
+                            <input id="agendamentoDataHora" type="datetime-local" required />
                         </div>
                         <div class="form-group">
-                            <label>Horário</label>
-                            <input type="time" />
-                        </div>
-                        <div class="form-group">
-                            <label>Mecânica</label>
-                            <select>
-                                <option>EcoCar Elétricos (1.2 km)</option>
-                                <option>Volt Tech (2.5 km)</option>
-                                <option>Green Motion (3.8 km)</option>
+                            <label for="agendamentoMecanica">Mecânica</label>
+                            <select id="agendamentoMecanica" required>
+                                <option value="">Carregando oficinas...</option>
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="agendamentoObs">Observações (opcional)</label>
+                            <textarea id="agendamentoObs" rows="3" maxlength="1000" placeholder="Descreva o que precisa ser verificado"></textarea>
                         </div>
                         <button type="submit" class="btn-primary">
-                            <i class="fas fa-check"></i> Confirmar Agendamento
+                            <i class="fas fa-check"></i> Solicitar agendamento
                         </button>
+                        <p id="agendamentoMensagem" role="status" aria-live="polite"></p>
                     </form>
+                    <div class="meus-agendamentos">
+                        <h3>Meus agendamentos</h3>
+                        <div id="meusAgendamentos">Carregando...</div>
+                    </div>
                 </div>
             </div>
         </section>
