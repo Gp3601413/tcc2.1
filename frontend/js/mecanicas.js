@@ -14,35 +14,68 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function texto(tag, classe, valor) {
         const el = document.createElement(tag);
-        el.className = classe;
+        if (classe) el.className = classe;
         el.textContent = valor ?? '';
         return el;
     }
 
+    function linhaInfo(icone, valor) {
+        const linha = document.createElement('p');
+        linha.className = 'oficina-info';
+        const simbolo = document.createElement('i');
+        simbolo.className = 'fas ' + icone;
+        simbolo.setAttribute('aria-hidden', 'true');
+        const conteudo = texto('span', '', valor || 'Não informado');
+        linha.append(simbolo, conteudo);
+        return linha;
+    }
+
     function cardOficina(mec) {
-        const card = document.createElement('div');
+        const card = document.createElement('article');
         card.className = 'mecanica-card';
+
         const header = document.createElement('div');
-        header.className = 'card-header';
+        header.className = 'oficina-card-header';
         const icon = document.createElement('div');
         icon.className = 'card-icon';
-        icon.innerHTML = '<i class="fas fa-tools" aria-hidden="true"></i>';
-        const detalhes = document.createElement('div');
-        detalhes.append(texto('h3', '', mec.nome), texto('span', 'especializacao', mec.especializacao));
-        header.append(icon, detalhes);
-        const nota = Number.isFinite(Number(mec.avaliacao)) ? Math.max(0, Math.min(5, Number(mec.avaliacao))) : 0;
-        const avaliacaoEl = document.createElement('div');
-        avaliacaoEl.className = 'avaliacao';
-        const cheias = Math.round(nota);
-        avaliacaoEl.append(texto('span', 'stars', '★'.repeat(cheias) + '☆'.repeat(5 - cheias)),
-            texto('span', '', nota.toFixed(1)));
-        const telefone = String(mec.telefone || '').replace(/[^0-9+]/g, '');
-        if (/^\+?\d{8,15}$/.test(telefone)) {
-            const link = texto('a', 'btn-card', 'Ligar');
-            link.href = 'tel:' + telefone;
-            avaliacaoEl.append(link);
+        const iconElement = document.createElement('i');
+        iconElement.className = 'fas fa-charging-station';
+        iconElement.setAttribute('aria-hidden', 'true');
+        icon.append(iconElement);
+
+        const titulo = document.createElement('div');
+        titulo.className = 'card-info';
+        titulo.append(
+            texto('h3', '', mec.nome),
+            texto('span', 'especializacao', mec.especializacao || 'Oficina parceira')
+        );
+        header.append(icon, titulo);
+
+        const conteudo = document.createElement('div');
+        conteudo.className = 'oficina-card-content';
+        if (mec.demonstracao) {
+            const selo = texto('span', 'oficina-demo-badge', 'Oficina fictícia • Demonstração');
+            conteudo.append(selo);
         }
-        card.append(header, texto('div', 'info', mec.endereco), texto('div', 'info', mec.telefone), avaliacaoEl);
+        conteudo.append(linhaInfo('fa-location-dot', mec.endereco));
+        if (mec.telefone) conteudo.append(linhaInfo('fa-phone', mec.telefone));
+
+        const rodape = document.createElement('div');
+        rodape.className = 'oficina-card-footer';
+        const nota = Number.isFinite(Number(mec.avaliacao))
+            ? Math.max(0, Math.min(5, Number(mec.avaliacao))) : 0;
+        const avaliacaoEl = document.createElement('div');
+        avaliacaoEl.className = 'oficina-avaliacao';
+        avaliacaoEl.append(
+            texto('span', 'stars', '★'.repeat(Math.round(nota)) + '☆'.repeat(5 - Math.round(nota))),
+            texto('strong', '', nota.toFixed(1))
+        );
+        if (mec.demonstracao) avaliacaoEl.append(texto('small', '', 'nota ilustrativa'));
+        rodape.append(avaliacaoEl);
+
+        const acao = texto('span', 'oficina-disponivel', 'Parceira Smart Fix');
+        rodape.append(acao);
+        card.append(header, conteudo, rodape);
         return card;
     }
 
@@ -54,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (proxima) proxima.disabled = true;
         grid.setAttribute('aria-busy', 'true');
         grid.replaceChildren(texto('p', 'status-message', 'Carregando oficinas...'));
-        const params = new URLSearchParams({ pagina, tamanhoPagina: busca ? 12 : 3 });
+        const params = new URLSearchParams({ pagina, tamanhoPagina: 12 });
         if (busca?.value.trim()) params.set('busca', busca.value.trim());
         if (especializacao?.value) params.set('especializacao', especializacao.value);
         if (avaliacao?.value) params.set('avaliacaoMinima', avaliacao.value);
@@ -68,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (proxima) proxima.disabled = !dados.temMais;
         } catch (erro) {
             if (controller.signal.aborted) return;
-            grid.replaceChildren(texto('p', 'status-message', erro.message));
+            grid.replaceChildren(texto('p', 'status-message', erro.message || 'Não foi possível carregar as oficinas.'));
             const tentar = texto('button', 'btn-primary', 'Tentar novamente');
             tentar.type = 'button';
             tentar.addEventListener('click', carregar);
