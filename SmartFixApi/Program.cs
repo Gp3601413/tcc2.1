@@ -105,9 +105,9 @@ using (var scope = app.Services.CreateScope())
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     await db.Database.ExecuteSqlRawAsync("""
         CREATE TABLE IF NOT EXISTS agendamentos (
-            id CHAR(36) NOT NULL PRIMARY KEY,
-            usuario_id CHAR(36) NOT NULL,
-            mecanica_id CHAR(36) NOT NULL,
+            id CHAR(36) CHARACTER SET ascii COLLATE ascii_general_ci NOT NULL PRIMARY KEY,
+            usuario_id CHAR(36) CHARACTER SET ascii COLLATE ascii_general_ci NOT NULL,
+            mecanica_id CHAR(36) CHARACTER SET ascii COLLATE ascii_general_ci NOT NULL,
             servico VARCHAR(180) NOT NULL,
             data_hora DATETIME NOT NULL,
             observacoes TEXT NULL,
