@@ -105,9 +105,9 @@ app.MapGet("/health", () => Results.Ok(new { status = "ok", service = "SmartFixA
 app.MapGet("/health/ready", async (AppDbContext db, CancellationToken ct) =>
 {
     var conectado = await db.Database.CanConnectAsync(ct);
-    return conectado
-        ? Results.Ok(new { status = "ready", database = "connected" })
-        : Results.StatusCode(StatusCodes.Status503ServiceUnavailable);
+    if (conectado)
+        return (IResult)Results.Ok(new { status = "ready", database = "connected" });
+    return Results.StatusCode(StatusCodes.Status503ServiceUnavailable);
 });
 app.MapControllers();
 
