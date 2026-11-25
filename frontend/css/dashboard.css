@@ -1495,7 +1495,7 @@ body {
 }
 
 .agendar-form > h3::before {
-    content: "\\f274";
+    content: "\f274";
     display: grid;
     width: 34px;
     height: 34px;
