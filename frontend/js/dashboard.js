@@ -83,6 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function classificarTemperatura(temp) {
+        if (temp < 10) return { texto: 'Baixa, verifique o sistema', cor: '#06b6d4', icone: 'fa-temperature-low' };
         if (temp < 35) return { texto: 'Normal', cor: '#3b82f6', icone: 'fa-thermometer-half' };
         if (temp < 40) return { texto: 'Elevada, fique atento', cor: '#f59e0b', icone: 'fa-thermometer-three-quarters' };
         return { texto: 'Alta, verifique o sistema', cor: '#ef4444', icone: 'fa-thermometer-full' };
@@ -123,7 +124,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const icones = {
             bateria_baixa: 'fa-battery-quarter',
-            temperatura_alta: 'fa-temperature-high'
+            temperatura_alta: 'fa-temperature-high',
+            temperatura_baixa: 'fa-temperature-low'
         };
 
         container.innerHTML = alertas.map(alerta => `
