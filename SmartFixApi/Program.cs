@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using SmartFixApi.Data;
+using SmartFixApi.Infrastructure;
 using SmartFixApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -72,10 +73,14 @@ builder.Services.AddCors(options =>
 
 // ---------- Controllers + Swagger ----------
 builder.Services.AddControllers();
+builder.Services.AddExceptionHandler<ApiExceptionHandler>();
+builder.Services.AddProblemDetails();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+app.UseExceptionHandler();
 
 if (app.Environment.IsDevelopment())
 {
@@ -97,6 +102,13 @@ app.UseCors("FrontendPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapGet("/health", () => Results.Ok(new { status = "ok", service = "SmartFixApi" }));
+app.MapGet("/health/ready", async (AppDbContext db, CancellationToken ct) =>
+{
+    var conectado = await db.Database.CanConnectAsync(ct);
+    return conectado
+        ? Results.Ok(new { status = "ready", database = "connected" })
+        : Results.StatusCode(StatusCodes.Status503ServiceUnavailable);
+});
 app.MapControllers();
 
 
