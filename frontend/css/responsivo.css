@@ -1,0 +1,159 @@
+
+/* ============================================
+   RESPONSIVO.CSS - Todas as telas
+   ============================================ */
+
+/* ----- TABLET (768px - 1024px) ----- */
+@media (max-width: 1024px) {
+    .hero .container {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .hero-content > p {
+        margin: 0 auto 30px;
+    }
+
+    .hero-stats {
+        justify-content: center;
+    }
+
+    .hero-buttons {
+        justify-content: center;
+    }
+
+    .floating-elements {
+        display: none;
+    }
+
+    .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ----- MOBILE GRANDE (768px) ----- */
+@media (max-width: 768px) {
+    /* HEADER */
+    .header .container {
+        flex-wrap: wrap;
+    }
+
+    .nav {
+        width: 100%;
+        flex-direction: column;
+        gap: 16px;
+        padding: 16px 0;
+        display: none;
+    }
+
+    .nav.open {
+        display: flex;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        width: 100%;
+        gap: 12px;
+        text-align: center;
+    }
+
+    .nav-actions {
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .slogan-header {
+        display: none;
+    }
+
+    /* HERO */
+    .hero-content h1 {
+        font-size: 32px;
+    }
+
+    .hero-stats {
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    /* STEPS */
+    .steps {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    /* FEATURES */
+    .features-grid {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    /* NEWSLETTER */
+    .newsletter-form {
+        flex-direction: column;
+        padding: 0 20px;
+    }
+
+    .section-header h2 {
+        font-size: 28px;
+    }
+}
+
+/* ----- MOBILE PEQUENO (480px) ----- */
+@media (max-width: 480px) {
+    .hero {
+        padding: 120px 0 60px;
+    }
+
+    .hero-content h1 {
+        font-size: 26px;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .mecanicas-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .testimonials-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .logo-img {
+        height: 30px;
+    }
+
+    .car-logo-badge {
+        top: 10px;
+        right: 10px;
+        padding: 4px 10px;
+    }
+
+    .car-logo-badge img {
+        height: 20px;
+    }
+
+    .car-logo-badge span {
+        font-size: 11px;
+    }
+}

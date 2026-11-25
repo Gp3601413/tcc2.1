@@ -1,0 +1,277 @@
+/* ============================================
+   MECANICAS.CSS - Página de Mecânicas
+   ============================================ */
+
+.pagina-mecanicas {
+    padding: 120px 0 60px;
+    background: #f5f7fa;
+    min-height: 100vh;
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.page-header h1 {
+    font-size: 42px;
+    color: var(--sfx-azul-escuro);
+}
+
+.page-header h1 span {
+    color: var(--sfx-primary);
+}
+
+.page-header p {
+    color: var(--sfx-cinza);
+    font-size: 18px;
+}
+
+/* ----- FILTROS ----- */
+.filtros-mecanicas {
+    background: var(--sfx-branco);
+    border-radius: var(--border-radius);
+    padding: 24px;
+    margin-bottom: 30px;
+    box-shadow: var(--shadow);
+}
+
+.filtro-busca {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #f5f7fa;
+    border-radius: 30px;
+    padding: 0 16px;
+    margin-bottom: 16px;
+}
+
+.filtro-busca i {
+    color: var(--sfx-cinza);
+}
+
+.filtro-busca input {
+    flex: 1;
+    padding: 12px 0;
+    border: none;
+    background: transparent;
+    font-size: 15px;
+    outline: none;
+    font-family: inherit;
+}
+
+.filtros {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.filtros select {
+    flex: 1;
+    min-width: 150px;
+    padding: 10px 14px;
+    border: 2px solid #e8edf2;
+    border-radius: 8px;
+    font-size: 14px;
+    background: var(--sfx-branco);
+    outline: none;
+    cursor: pointer;
+    font-family: inherit;
+    transition: var(--transition);
+}
+
+.filtros select:focus {
+    border-color: var(--sfx-primary);
+}
+
+/* ----- MECÂNICAS GRID ----- */
+.mecanicas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 30px;
+}
+
+.mecanica-card {
+    background: var(--sfx-branco);
+    border-radius: var(--border-radius);
+    padding: 28px;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.mecanica-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--sfx-primary);
+}
+
+.mecanica-card .card-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.mecanica-card .card-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: rgba(0, 180, 216, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    color: var(--sfx-primary);
+    flex-shrink: 0;
+}
+
+.mecanica-card .card-info h3 {
+    font-size: 18px;
+    color: var(--sfx-azul-escuro);
+}
+
+.mecanica-card .card-info .especializacao {
+    display: inline-block;
+    background: var(--sfx-gradient);
+    color: var(--sfx-branco);
+    padding: 2px 14px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.mecanica-card .detalhes {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.mecanica-card .detalhes .info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--sfx-cinza);
+    font-size: 14px;
+}
+
+.mecanica-card .detalhes .info i {
+    width: 20px;
+    color: var(--sfx-primary);
+}
+
+.mecanica-card .card-footer {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #e8edf2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mecanica-card .card-footer .avaliacao {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.mecanica-card .card-footer .avaliacao .stars {
+    color: #fbbf24;
+    letter-spacing: 2px;
+}
+
+.mecanica-card .card-footer .avaliacao .nota {
+    font-weight: 700;
+    color: var(--sfx-azul-escuro);
+}
+
+.mecanica-card .btn-agendar {
+    background: var(--sfx-primary);
+    color: var(--sfx-branco);
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.mecanica-card .btn-agendar:hover {
+    background: var(--sfx-primary-dark);
+    transform: scale(1.05);
+}
+
+/* ----- PAGINAÇÃO ----- */
+.paginacao {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+}
+
+.btn-pagina {
+    padding: 10px 18px;
+    border: 2px solid #e8edf2;
+    border-radius: 8px;
+    background: var(--sfx-branco);
+    cursor: pointer;
+    transition: var(--transition);
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--sfx-cinza);
+}
+
+.btn-pagina:hover {
+    background: var(--sfx-primary);
+    color: var(--sfx-branco);
+    border-color: var(--sfx-primary);
+}
+
+.btn-pagina.ativo {
+    background: var(--sfx-primary);
+    color: var(--sfx-branco);
+    border-color: var(--sfx-primary);
+}
+
+/* ----- RESPONSIVIDADE ----- */
+@media (max-width: 768px) {
+    .filtros {
+        flex-direction: column;
+    }
+
+    .filtros select {
+        min-width: auto;
+    }
+
+    .mecanicas-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .page-header h1 {
+        font-size: 32px;
+    }
+}
+
+@media (max-width: 480px) {
+    .filtros-mecanicas {
+        padding: 16px;
+    }
+
+    .mecanica-card {
+        padding: 20px;
+    }
+
+    .mecanica-card .card-footer {
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch;
+    }
+
+    .mecanica-card .btn-agendar {
+        width: 100%;
+        text-align: center;
+    }
+}

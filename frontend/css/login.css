@@ -1,0 +1,321 @@
+/* ============================================
+   LOGIN.CSS - Página de Login (ATUALIZADO)
+   ============================================ */
+
+.pagina-login {
+    padding: 120px 0 60px;
+    background: #f5f7fa;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.login-wrapper {
+    max-width: 440px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.login-box {
+    background: var(--sfx-branco);
+    padding: 48px 40px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-hover);
+    text-align: center;
+}
+
+/* ----- LOGO ----- */
+.login-logo {
+    height: 60px;
+    width: auto;
+    margin-bottom: 16px;
+}
+
+/* ----- TÍTULOS ----- */
+.login-box h2 {
+    font-size: 28px;
+    color: var(--sfx-azul-escuro);
+    margin-bottom: 4px;
+}
+
+.login-box p {
+    color: var(--sfx-cinza);
+    margin-bottom: 30px;
+    font-size: 15px;
+}
+
+/* ===== MENSAGEM DE ERRO ===== */
+.login-error {
+    background: rgba(255, 23, 68, 0.08);
+    border: 1px solid var(--sfx-vermelho);
+    color: var(--sfx-vermelho);
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    text-align: left;
+    animation: shakeError 0.4s ease;
+}
+
+.login-error i {
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+@keyframes shakeError {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    75% { transform: translateX(8px); }
+}
+
+/* ----- FORMULÁRIO ----- */
+.login-form {
+    text-align: left;
+}
+
+.login-form .form-group {
+    margin-bottom: 18px;
+}
+
+.login-form .form-group label {
+    display: block;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--sfx-azul-escuro);
+    margin-bottom: 6px;
+}
+
+.login-form .form-group label i {
+    color: var(--sfx-primary);
+    margin-right: 6px;
+}
+
+.login-form .form-group input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e8edf2;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: var(--transition);
+    font-family: inherit;
+}
+
+.login-form .form-group input:focus {
+    border-color: var(--sfx-primary);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 180, 216, 0.1);
+}
+
+/* ===== ESTADO DE ERRO NO CAMPO ===== */
+.login-form .form-group.erro input {
+    border-color: var(--sfx-vermelho);
+    box-shadow: 0 0 0 3px rgba(255, 23, 68, 0.1);
+}
+
+.campo-erro {
+    display: none;
+    font-size: 12px;
+    color: var(--sfx-vermelho);
+    margin-top: 4px;
+}
+
+.form-group.erro .campo-erro {
+    display: block;
+}
+
+/* ----- CAMPO SENHA COM OLHO ----- */
+.senha-wrapper {
+    position: relative;
+}
+
+.senha-wrapper input {
+    padding-right: 48px !important;
+}
+
+.toggle-senha {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--sfx-cinza);
+    cursor: pointer;
+    font-size: 18px;
+    padding: 4px;
+    transition: var(--transition);
+}
+
+.toggle-senha:hover {
+    color: var(--sfx-primary);
+}
+
+.toggle-senha.ativo {
+    color: var(--sfx-primary);
+}
+
+/* ----- OPÇÕES DO FORMULÁRIO ----- */
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 16px 0 24px;
+    font-size: 14px;
+}
+
+.checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--sfx-cinza);
+    cursor: pointer;
+}
+
+.checkbox input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--sfx-primary);
+    cursor: pointer;
+}
+
+.esqueci-senha {
+    color: var(--sfx-primary);
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.esqueci-senha:hover {
+    text-decoration: underline;
+}
+
+/* ----- BOTÃO DE LOGIN ----- */
+.btn-login-submit {
+    width: 100%;
+    justify-content: center;
+    padding: 16px;
+    font-size: 17px;
+}
+
+.btn-login-submit i {
+    font-size: 18px;
+}
+
+/* ===== ESTADO DE CARREGAMENTO ===== */
+.btn-login-submit.carregando {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.btn-login-submit.carregando i {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* ----- REDES SOCIAIS ----- */
+.login-social {
+    margin-top: 28px;
+    padding-top: 24px;
+    border-top: 1px solid #e8edf2;
+}
+
+.login-social span {
+    display: block;
+    color: var(--sfx-cinza);
+    font-size: 13px;
+    margin-bottom: 12px;
+}
+
+.social-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.btn-social {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: var(--transition);
+    border: 2px solid #e8edf2;
+    background: var(--sfx-branco);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-social:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+.btn-social.google {
+    color: #ea4335;
+}
+
+.btn-social.google:hover {
+    border-color: #ea4335;
+    background: #ea433510;
+}
+
+.btn-social.facebook {
+    color: #1877f2;
+}
+
+.btn-social.facebook:hover {
+    border-color: #1877f2;
+    background: #1877f210;
+}
+
+/* ----- RODAPÉ DO LOGIN ----- */
+.login-footer {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid #e8edf2;
+    color: var(--sfx-cinza);
+    font-size: 14px;
+}
+
+.login-footer a {
+    color: var(--sfx-primary);
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.login-footer a:hover {
+    text-decoration: underline;
+}
+
+/* ----- RESPONSIVIDADE ----- */
+@media (max-width: 480px) {
+    .login-box {
+        padding: 32px 20px;
+    }
+
+    .login-box h2 {
+        font-size: 24px;
+    }
+
+    .social-buttons {
+        flex-direction: column;
+    }
+
+    .btn-social {
+        padding: 12px;
+    }
+
+    .form-options {
+        flex-direction: column;
+        gap: 12px;
+        align-items: flex-start;
+    }
+}

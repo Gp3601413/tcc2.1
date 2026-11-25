@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Fix (sFx) - Mecânicas Parceiras</title>
+    <link rel="icon" type="image/jpeg" href="image/logo sFx sem fundo.jpeg" />
+    <link rel="stylesheet" href="css/global.css" />
+    <link rel="stylesheet" href="css/mecanicas.css" />
+    <link rel="stylesheet" href="css/responsivo.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+    <!-- ========== HEADER ========== -->
+    <header class="header" id="header">
+        <div class="container">
+            <a href="index.html" class="logo-link">
+                <img src="image/logo sFx sem fundo.jpeg" alt="Smart Fix (sFx)" class="logo-img" />
+                <span class="slogan-header">Soluções Inteligentes. Resultados Reais.</span>
+            </a>
+            <nav class="nav">
+                <ul class="nav-links">
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="mecanicas.html" class="active">Mecânicas</a></li>
+                    <li><a href="sobre.html">Sobre</a></li>
+                    <li><a href="contato.html">Contato</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <a href="login.html" class="btn-login">Entrar</a>
+                    <a href="cadastro.html" class="btn-primary btn-small">Cadastrar</a>
+                </div>
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ========== MECÂNICAS ========== -->
+    <section class="pagina-mecanicas">
+        <div class="container">
+            <div class="page-header">
+                <span class="section-tag">Parceiros</span>
+                <h1>Mecânicas <span>Especializadas</span></h1>
+                <p>Encontre as melhores oficinas para veículos elétricos perto de você</p>
+            </div>
+
+            <!-- Filtros -->
+            <div class="filtros-mecanicas">
+                <div class="filtro-busca">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Buscar mecânica por nome, cidade ou especialidade..." id="buscaMecanica" />
+                </div>
+                <div class="filtros">
+                    <select id="filtroEspecializacao">
+                        <option value="">Todas as especializações</option>
+                        <option value="Veículos Elétricos">Veículos Elétricos</option>
+                        <option value="Sistemas Elétricos">Sistemas Elétricos</option>
+                        <option value="Baterias">Baterias</option>
+                        <option value="Motores">Motores</option>
+                        <option value="Suspensão">Suspensão</option>
+                        <option value="Freios">Freios</option>
+                    </select>
+                    <select id="filtroAvaliacao">
+                        <option value="">Todas as avaliações</option>
+                        <option value="4.5">4.5+ estrelas</option>
+                        <option value="4.0">4.0+ estrelas</option>
+                        <option value="3.5">3.5+ estrelas</option>
+                    </select>
+                    <select id="filtroDistancia">
+                        <option value="">Qualquer distância</option>
+                        <option value="5">Até 5 km</option>
+                        <option value="10">Até 10 km</option>
+                        <option value="20">Até 20 km</option>
+                        <option value="50">Até 50 km</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Lista de Mecânicas -->
+            <div class="mecanicas-grid" id="mecanicasGrid">
+                <!-- Cards gerados pelo JavaScript -->
+            </div>
+
+            <!-- Paginação -->
+            <div class="paginacao">
+                <button class="btn-pagina ativo">1</button>
+                <button class="btn-pagina">2</button>
+                <button class="btn-pagina">3</button>
+                <button class="btn-pagina">Próximo →</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="index.html" class="logo-link">
+                        <img src="image/logo sFx sem fundo.jpeg" alt="Smart Fix" class="logo-img-footer" />
+                    </a>
+                    <p>Soluções Inteligentes. Resultados Reais.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Links Rápidos</h4>
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="mecanicas.html">Mecânicas</a></li>
+                        <li><a href="sobre.html">Sobre</a></li>
+                        <li><a href="contato.html">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Suporte</h4>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Termos de Uso</a></li>
+                        <li><a href="#">Privacidade</a></li>
+                        <li><a href="contato.html">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contato</h4>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> contato@smartfix.com</li>
+                        <li><i class="fas fa-phone"></i> (11) 99999-9999</li>
+                        <li><i class="fas fa-map-marker-alt"></i> São Paulo, SP</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 <strong style="color:var(--sfx-primary);">Smart Fix (sFx)</strong> - Todos os direitos reservados</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/config.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html> 

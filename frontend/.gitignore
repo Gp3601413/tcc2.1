@@ -1,0 +1,12 @@
+# Visual Studio
+.vs/
+
+# Variáveis de ambiente
+.env
+.env*
+
+# Vercel
+.vercel/
+
+# Dependências do Node
+node_modules/

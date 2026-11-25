@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Fix (sFx) - Cadastro</title>
+    <link rel="icon" type="image/jpeg" href="image/logo sFx sem fundo.jpeg" />
+    <link rel="stylesheet" href="css/global.css" />
+    <link rel="stylesheet" href="css/cadastro.css" />
+    <link rel="stylesheet" href="css/responsivo.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+    <!-- ========== HEADER ========== -->
+    <header class="header" id="header">
+        <div class="container">
+            <a href="index.html" class="logo-link">
+                <img src="image/logo sFx sem fundo.jpeg" alt="Smart Fix (sFx)" class="logo-img" />
+                <span class="slogan-header">Soluções Inteligentes. Resultados Reais.</span>
+            </a>
+            <nav class="nav">
+                <ul class="nav-links">
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="mecanicas.html">Mecânicas</a></li>
+                    <li><a href="sobre.html">Sobre</a></li>
+                    <li><a href="contato.html">Contato</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <a href="login.html" class="btn-login">Entrar</a>
+                    <a href="cadastro.html" class="btn-primary btn-small active">Cadastrar</a>
+                </div>
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ========== CADASTRO ========== -->
+    <section class="pagina-cadastro">
+        <div class="container">
+            <div class="cadastro-wrapper">
+                <!-- Lado Esquerdo - Banner -->
+                <div class="cadastro-left">
+                    <div class="cadastro-banner">
+                        <img src="image/logo sFx sem fundo.jpeg" alt="Smart Fix" class="banner-logo" />
+                        <h1>Crie sua conta</h1>
+                        <p>Comece a monitorar seu veículo elétrico agora mesmo</p>
+                        <div class="beneficios">
+                            <div class="beneficio">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Monitoramento 24/7</span>
+                            </div>
+                            <div class="beneficio">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Alertas em tempo real</span>
+                            </div>
+                            <div class="beneficio">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Mecânicas parceiras</span>
+                            </div>
+                            <div class="beneficio">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Grátis para sempre</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lado Direito - Formulário -->
+                <div class="cadastro-right">
+                    <div class="cadastro-form-wrapper">
+                        <h2>Criar Conta</h2>
+                        <p class="subtitulo">Preencha os dados abaixo para começar</p>
+
+                        <form id="cadastroForm" class="cadastro-form">
+                            <!-- Dados Pessoais -->
+                            <div class="form-section">
+                                <h3><i class="fas fa-user"></i> Dados Pessoais</h3>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="nome">Nome Completo *</label>
+                                        <input type="text" id="nome" placeholder="João Silva" required />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cpf">CPF *</label>
+                                        <input type="text" id="cpf" placeholder="123.456.789-00" required />
+                                        <span class="campo-ajuda">Apenas números</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="email">E-mail *</label>
+                                        <input type="email" id="email" placeholder="joao@email.com" required />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="telefone">Telefone</label>
+                                        <input type="tel" id="telefone" placeholder="(11) 99999-9999" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Endereço -->
+                            <div class="form-section">
+                                <h3><i class="fas fa-map-marker-alt"></i> Endereço</h3>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="cep">CEP *</label>
+                                        <input type="text" id="cep" placeholder="01234-567" required />
+                                        <span class="campo-ajuda">Digite o CEP para preencher automaticamente</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cidade">Cidade *</label>
+                                        <input type="text" id="cidade" placeholder="São Paulo" required />
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="estado">Estado *</label>
+                                        <select id="estado" required>
+                                            <option value="">Selecione</option>
+                                            <option value="SP">São Paulo</option>
+                                            <option value="RJ">Rio de Janeiro</option>
+                                            <option value="MG">Minas Gerais</option>
+                                            <option value="RS">Rio Grande do Sul</option>
+                                            <option value="PR">Paraná</option>
+                                            <option value="SC">Santa Catarina</option>
+                                            <option value="BA">Bahia</option>
+                                            <option value="PE">Pernambuco</option>
+                                            <option value="CE">Ceará</option>
+                                            <option value="DF">Distrito Federal</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="endereco">Endereço *</label>
+                                        <input type="text" id="endereco" placeholder="Av. Paulista, 1000" required />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Informações do Veículo -->
+                            <div class="form-section">
+                                <h3><i class="fas fa-car"></i> Informações do Veículo</h3>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="marca">Marca *</label>
+                                        <select id="marca" required>
+                                            <option value="">Selecione</option>
+                                            <option value="Tesla">Tesla</option>
+                                            <option value="BYD">BYD</option>
+                                            <option value="Volvo">Volvo</option>
+                                            <option value="BMW">BMW</option>
+                                            <option value="Mercedes">Mercedes</option>
+                                            <option value="Audi">Audi</option>
+                                            <option value="Porsche">Porsche</option>
+                                            <option value="Renault">Renault</option>
+                                            <option value="Nissan">Nissan</option>
+                                            <option value="Chevrolet">Chevrolet</option>
+                                            <option value="Outro">Outro</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="modelo">Modelo *</label>
+                                        <input type="text" id="modelo" placeholder="Model 3" required />
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="ano">Ano *</label>
+                                        <select id="ano" required>
+                                            <option value="">Selecione</option>
+                                            <option value="2024">2024</option>
+                                            <option value="2023">2023</option>
+                                            <option value="2022">2022</option>
+                                            <option value="2021">2021</option>
+                                            <option value="2020">2020</option>
+                                            <option value="2019">2019</option>
+                                            <option value="2018">2018</option>
+                                            <option value="2017">2017</option>
+                                            <option value="2016">2016</option>
+                                            <option value="2015">2015</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="placa">Placa</label>
+                                        <input type="text" id="placa" placeholder="ABC-1234" />
+                                        <span class="campo-ajuda">Opcional</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="bateria">Capacidade da Bateria (kWh)</label>
+                                        <input type="number" id="bateria" placeholder="75" step="0.5" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cor">Cor do Veículo</label>
+                                        <select id="cor">
+                                            <option value="">Selecione</option>
+                                            <option value="Branco">Branco</option>
+                                            <option value="Preto">Preto</option>
+                                            <option value="Prata">Prata</option>
+                                            <option value="Azul">Azul</option>
+                                            <option value="Vermelho">Vermelho</option>
+                                            <option value="Verde">Verde</option>
+                                            <option value="Amarelo">Amarelo</option>
+                                            <option value="Laranja">Laranja</option>
+                                            <option value="Roxo">Roxo</option>
+                                            <option value="Cinza">Cinza</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Segurança -->
+                            <div class="form-section">
+                                <h3><i class="fas fa-lock"></i> Segurança</h3>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="senha">Senha *</label>
+                                        <input type="password" id="senha" placeholder="••••••••" required />
+                                        <span class="campo-ajuda">Mínimo 8 caracteres</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="confirmar-senha">Confirmar Senha *</label>
+                                        <input type="password" id="confirmar-senha" placeholder="••••••••" required />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Termos -->
+                            <div class="form-termos">
+                                <label class="checkbox">
+                                    <input type="checkbox" required />
+                                    <span>Li e aceito os <a href="termos.html">Termos de Uso</a> e a <a href="privacidade.html">Política de Privacidade</a></span>
+                                </label>
+                            </div>
+
+                            <div id="cadastroError" class="form-erro-geral" style="display:none; color:#e11d48; margin-bottom:1rem;">
+                                <span id="cadastroErrorMessage"></span>
+                            </div>
+
+                            <button type="submit" class="btn-primary btn-cadastrar" id="btnCadastroSubmit">
+                                <i class="fas fa-user-plus"></i> Criar Conta
+                            </button>
+
+                            <div class="cadastro-footer">
+                                <p>Já tem uma conta? <a href="login.html">Faça login</a></p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="index.html" class="logo-link">
+                        <img src="image/logo sFx sem fundo.jpeg" alt="Smart Fix" class="logo-img-footer" />
+                    </a>
+                    <p>Soluções Inteligentes. Resultados Reais.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Links Rápidos</h4>
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="mecanicas.html">Mecânicas</a></li>
+                        <li><a href="sobre.html">Sobre</a></li>
+                        <li><a href="contato.html">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Suporte</h4>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Termos de Uso</a></li>
+                        <li><a href="#">Privacidade</a></li>
+                        <li><a href="contato.html">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contato</h4>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> contato@smartfix.com</li>
+                        <li><i class="fas fa-phone"></i> (11) 99999-9999</li>
+                        <li><i class="fas fa-map-marker-alt"></i> São Paulo, SP</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 <strong style="color:var(--sfx-primary);">Smart Fix (sFx)</strong> - Todos os direitos reservados</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/config.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/cadastro.js"></script>
+</body>
+</html>

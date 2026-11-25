@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Fix (sFx) - Contato</title>
+    <link rel="icon" type="image/jpeg" href="image/logo sFx sem fundo.jpeg" />
+    <link rel="stylesheet" href="css/global.css" />
+    <link rel="stylesheet" href="css/contato.css" />
+    <link rel="stylesheet" href="css/responsivo.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+    <!-- ========== HEADER ========== -->
+    <header class="header" id="header">
+        <div class="container">
+            <a href="index.html" class="logo-link">
+                <img src="image/logo sFx sem fundo.jpeg" alt="Smart Fix (sFx)" class="logo-img" />
+                <span class="slogan-header">Soluções Inteligentes. Resultados Reais.</span>
+            </a>
+            <nav class="nav">
+                <ul class="nav-links">
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="mecanicas.html">Mecânicas</a></li>
+                    <li><a href="sobre.html">Sobre</a></li>
+                    <li><a href="contato.html" class="active">Contato</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <a href="login.html" class="btn-login">Entrar</a>
+                    <a href="cadastro.html" class="btn-primary btn-small">Cadastrar</a>
+                </div>
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ========== CONTATO ========== -->
+    <section class="pagina-contato">
+        <div class="container">
+            <div class="page-header">
+                <span class="section-tag">Fale Conosco</span>
+                <h1>Entre em <span>Contato</span></h1>
+                <p>Estamos aqui para ajudar você com qualquer dúvida ou solicitação</p>
+            </div>
+
+            <div class="contato-wrapper">
+                <!-- Informações de Contato -->
+                <div class="contato-info">
+                    <h2>Informações de Contato</h2>
+                    
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div>
+                            <h4>Endereço</h4>
+                            <p>Av. Paulista, 1000 - São Paulo, SP</p>
+                            <span>CEP: 01310-100</span>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div>
+                            <h4>Telefone</h4>
+                            <p>(11) 99999-9999</p>
+                            <span>Atendimento: 24h</span>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <h4>E-mail</h4>
+                            <p>contato@smartfix.com</p>
+                            <p>suporte@smartfix.com</p>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div>
+                            <h4>Horário de Atendimento</h4>
+                            <p>Segunda a Sexta: 8h - 18h</p>
+                            <p>Sábado: 9h - 14h</p>
+                            <p>Domingo: Fechado</p>
+                        </div>
+                    </div>
+
+                    <div class="redes-sociais-contato">
+                        <h4>Redes Sociais</h4>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-youtube"></i></a>
+                            <a href="#"><i class="fab fa-whatsapp"></i></a>
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- WhatsApp Flutuante -->
+                    <a href="#" class="whatsapp-float">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>Fale no WhatsApp</span>
+                    </a>
+                </div>
+
+                <!-- Formulário -->
+                <div class="contato-form-wrapper">
+                    <h2>Envie uma Mensagem</h2>
+                    <p class="form-subtitulo">Preencha o formulário abaixo que retornaremos o mais rápido possível</p>
+
+                    <form id="contatoForm" class="contato-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contatoNome">Nome Completo *</label>
+                                <input type="text" id="contatoNome" placeholder="Seu nome" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="contatoEmail">E-mail *</label>
+                                <input type="email" id="contatoEmail" placeholder="seu@email.com" required />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contatoTelefone">Telefone</label>
+                            <input type="tel" id="contatoTelefone" placeholder="(11) 99999-9999" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contatoAssunto">Assunto *</label>
+                            <select id="contatoAssunto" required>
+                                <option value="">Selecione um assunto</option>
+                                <option value="Dúvida">Dúvida sobre o serviço</option>
+                                <option value="Problema">Problema técnico</option>
+                                <option value="Sugestão">Sugestão</option>
+                                <option value="Parceria">Parceria</option>
+                                <option value="Outro">Outro</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contatoMensagem">Mensagem *</label>
+                            <textarea id="contatoMensagem" rows="6" placeholder="Descreva sua mensagem em detalhes..." required></textarea>
+                        </div>
+
+                        <div id="contatoFeedback" style="display:none; margin-bottom:1rem;"></div>
+
+                        <button type="submit" class="btn-primary btn-enviar" id="btnContatoSubmit">
+                            <i class="fas fa-paper-plane"></i> Enviar Mensagem
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Mapa -->
+            <div class="mapa-container">
+                <h2>Onde <span>Estamos</span></h2>
+                <div class="mapa-placeholder">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <p>Av. Paulista, 1000 - São Paulo, SP</p>
+                    <span>Google Maps - Clique para ver a rota</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="index.html" class="logo-link">
+                        <img src="image/logo sFx sem fundo.jpeg" alt="Smart Fix" class="logo-img-footer" />
+                    </a>
+                    <p>Soluções Inteligentes. Resultados Reais.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Links Rápidos</h4>
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="mecanicas.html">Mecânicas</a></li>
+                        <li><a href="sobre.html">Sobre</a></li>
+                        <li><a href="contato.html">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Suporte</h4>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Termos de Uso</a></li>
+                        <li><a href="#">Privacidade</a></li>
+                        <li><a href="contato.html">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contato</h4>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> contato@smartfix.com</li>
+                        <li><i class="fas fa-phone"></i> (11) 99999-9999</li>
+                        <li><i class="fas fa-map-marker-alt"></i> São Paulo, SP</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 <strong style="color:var(--sfx-primary);">Smart Fix (sFx)</strong> - Todos os direitos reservados</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/config.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/contato.js"></script>
+</body>
+</html>

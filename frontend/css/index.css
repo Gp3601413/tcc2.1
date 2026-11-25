@@ -1,0 +1,539 @@
+/* ============================================
+   INDEX.CSS - Página Inicial (index.html)
+   ============================================ */
+
+/* ----- HERO ----- */
+.hero {
+    padding: 140px 0 80px;
+    background: linear-gradient(135deg, var(--sfx-azul-escuro) 0%, #0d2137 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(0, 180, 216, 0.05) 0%, transparent 70%);
+    border-radius: 50%;
+}
+
+.hero .container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-content .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(0, 180, 216, 0.12);
+    padding: 6px 18px 6px 10px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--sfx-primary-light);
+    border: 1px solid rgba(0, 180, 216, 0.15);
+    margin-bottom: 24px;
+}
+
+.hero-content .badge img {
+    height: 22px;
+    width: auto;
+}
+
+.hero-content h1 {
+    font-size: 52px;
+    font-weight: 800;
+    color: var(--sfx-branco);
+    line-height: 1.15;
+    margin-bottom: 20px;
+}
+
+.hero-content h1 span {
+    color: var(--sfx-primary);
+}
+
+.hero-content > p {
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.6);
+    max-width: 500px;
+    line-height: 1.7;
+    margin-bottom: 30px;
+}
+
+.hero-stats {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 35px;
+}
+
+.stat .number {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--sfx-branco);
+}
+
+.stat .label {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.hero-image {
+    position: relative;
+}
+
+.car-container {
+    position: relative;
+    animation: floatCar 4s ease-in-out infinite;
+}
+
+.car-image {
+    width: 100%;
+    border-radius: var(--border-radius);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.car-logo-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(10, 22, 40, 0.85);
+    backdrop-filter: blur(10px);
+    padding: 8px 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 180, 216, 0.3);
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.car-logo-badge img {
+    height: 28px;
+    width: auto;
+}
+
+.car-logo-badge span {
+    color: var(--sfx-branco);
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.floating-elements {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.float-icon {
+    position: absolute;
+    background: var(--sfx-azul-escuro);
+    padding: 10px 16px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--sfx-branco);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    animation: floatElement 3s ease-in-out infinite;
+}
+
+.float-icon i {
+    font-size: 20px;
+}
+
+.float-icon.battery {
+    top: 10%;
+    left: -5%;
+    animation-delay: 0s;
+}
+.float-icon.battery i { color: var(--sfx-verde); }
+
+.float-icon.temp {
+    top: 20%;
+    right: -5%;
+    animation-delay: 0.5s;
+}
+.float-icon.temp i { color: var(--sfx-vermelho); }
+
+.float-icon.speed {
+    bottom: 20%;
+    left: -5%;
+    animation-delay: 1s;
+}
+.float-icon.speed i { color: var(--sfx-primary); }
+
+@keyframes floatCar {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+@keyframes floatElement {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+/* ----- COMO FUNCIONA ----- */
+.como-funciona {
+    padding: 100px 0;
+    background: var(--sfx-branco);
+}
+
+.steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+}
+
+.step {
+    text-align: center;
+    padding: 40px 24px;
+    border-radius: var(--border-radius);
+    background: var(--sfx-branco);
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.step:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--sfx-primary);
+}
+
+.step .step-number {
+    position: absolute;
+    top: 10px;
+    right: 16px;
+    font-size: 48px;
+    font-weight: 800;
+    color: rgba(0, 180, 216, 0.06);
+    line-height: 1;
+}
+
+.step-icon {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 20px;
+    background: var(--sfx-gradient);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.step-icon i {
+    font-size: 30px;
+    color: var(--sfx-branco);
+}
+
+.step h3 {
+    font-size: 20px;
+    color: var(--sfx-azul-escuro);
+    margin-bottom: 10px;
+}
+
+.step p {
+    color: var(--sfx-cinza);
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+/* ----- MECÂNICAS ----- */
+.mecanicas {
+    padding: 100px 0;
+    background: #f5f7fa;
+}
+
+.mecanicas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.mecanica-card {
+    background: var(--sfx-branco);
+    padding: 28px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.mecanica-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--sfx-primary);
+}
+
+.mecanica-card .card-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.mecanica-card .card-icon {
+    width: 50px;
+    height: 50px;
+    background: rgba(0, 180, 216, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--sfx-primary);
+    font-size: 24px;
+}
+
+.mecanica-card h3 {
+    font-size: 18px;
+    color: var(--sfx-azul-escuro);
+}
+
+.mecanica-card .especializacao {
+    display: inline-block;
+    background: var(--sfx-gradient);
+    color: var(--sfx-branco);
+    padding: 2px 14px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    margin: 4px 0 10px;
+}
+
+.mecanica-card .info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--sfx-cinza);
+    font-size: 14px;
+    margin: 4px 0;
+}
+
+.mecanica-card .info i {
+    width: 18px;
+    color: var(--sfx-primary);
+}
+
+.mecanica-card .avaliacao {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #e8edf2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.mecanica-card .stars {
+    color: #fbbf24;
+    letter-spacing: 2px;
+}
+
+.mecanica-card .btn-card {
+    background: var(--sfx-primary);
+    color: var(--sfx-branco);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.mecanica-card .btn-card:hover {
+    background: var(--sfx-primary-dark);
+}
+
+/* ----- DIFERENCIAIS ----- */
+.diferenciais {
+    padding: 100px 0;
+    background: var(--sfx-branco);
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+}
+
+.feature {
+    text-align: center;
+    padding: 32px 20px;
+    border-radius: var(--border-radius);
+    background: var(--sfx-branco);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    transition: var(--transition);
+}
+
+.feature:hover {
+    border-color: var(--sfx-primary);
+    box-shadow: var(--shadow-hover);
+}
+
+.feature-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 16px;
+    background: rgba(0, 180, 216, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.feature-icon i {
+    font-size: 28px;
+    color: var(--sfx-primary);
+}
+
+.feature h3 {
+    font-size: 18px;
+    color: var(--sfx-azul-escuro);
+    margin-bottom: 8px;
+}
+
+.feature p {
+    color: var(--sfx-cinza);
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+/* ----- DEPOIMENTOS ----- */
+.depoimentos {
+    padding: 100px 0;
+    background: #f5f7fa;
+}
+
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.testimonial-card {
+    background: var(--sfx-branco);
+    padding: 28px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+.testimonial-card .quote {
+    font-size: 16px;
+    color: var(--sfx-azul-escuro);
+    line-height: 1.7;
+    margin-bottom: 16px;
+    font-style: italic;
+}
+
+.testimonial-card .author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.testimonial-card .avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--sfx-gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--sfx-branco);
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.testimonial-card .author-info h4 {
+    font-size: 15px;
+    color: var(--sfx-azul-escuro);
+}
+
+.testimonial-card .author-info span {
+    font-size: 13px;
+    color: var(--sfx-cinza);
+}
+
+/* ----- NEWSLETTER ----- */
+.newsletter {
+    padding: 80px 0;
+    background: var(--sfx-azul-escuro);
+    color: var(--sfx-branco);
+}
+
+.newsletter-content {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.newsletter-content .logo-newsletter {
+    height: 45px;
+    width: auto;
+    margin-bottom: 16px;
+}
+
+.newsletter-content h2 {
+    font-size: 32px;
+    margin-bottom: 12px;
+}
+
+.newsletter-content h2 span {
+    color: var(--sfx-primary);
+}
+
+.newsletter-content p {
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 24px;
+}
+
+.newsletter-form {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.newsletter-form input {
+    flex: 1;
+    padding: 14px 20px;
+    border-radius: 30px;
+    border: none;
+    font-size: 16px;
+    outline: none;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--sfx-branco);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.newsletter-form input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.newsletter-form input:focus {
+    border-color: var(--sfx-primary);
+    box-shadow: 0 0 0 3px rgba(0, 180, 216, 0.1);
+}

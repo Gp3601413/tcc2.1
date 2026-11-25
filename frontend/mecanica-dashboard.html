@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Smart Fix - Painel da Mecânica</title>
+    <link rel="icon" href="image/logo sFx sem fundo.jpeg">
+    <link rel="stylesheet" href="css/global.css"><link rel="stylesheet" href="css/portal.css">
+    <script defer src="js/config.js"></script><script defer src="js/sfx-core.js"></script><script defer src="js/auth-guard.js"></script>
+</head>
+<body>
+<main class="portal-page"><div class="container">
+    <div class="portal-top"><div><span class="section-tag">Área parceira</span><h1>Painel da mecânica</h1></div><button class="btn-primary" type="button" onclick="sfxSair()">Sair</button></div>
+    <form id="formPerfilMecanica" class="portal-card">
+        <h2>Perfil público <span id="badgeStatus" class="badge"></span></h2>
+        <div class="portal-form-grid">
+            <div><label for="mecNome">Nome da oficina</label><input id="mecNome" required maxlength="180"></div>
+            <div><label for="mecCnpj">CNPJ</label><input id="mecCnpj" disabled title="O CNPJ só pode ser alterado por um administrador"></div>
+            <div><label for="mecEspecializacao">Especialização</label><input id="mecEspecializacao" maxlength="180"></div>
+            <div><label for="mecTelefone">Telefone</label><input id="mecTelefone" type="tel" maxlength="30"></div>
+            <div class="full"><label for="mecEndereco">Endereço</label><input id="mecEndereco" maxlength="255"></div>
+            <div><label for="mecLatitude">Latitude</label><input id="mecLatitude" type="number" step="any" min="-90" max="90"></div>
+            <div><label for="mecLongitude">Longitude</label><input id="mecLongitude" type="number" step="any" min="-180" max="180"></div>
+        </div>
+        <div class="portal-actions"><button class="btn-primary" type="submit">Salvar perfil</button><span id="perfilMensagem" class="status-message"></span></div>
+    </form>
+    <section class="portal-card"><h2>Serviços oferecidos</h2><div id="listaServicos"></div><div class="portal-actions"><button class="btn-primary" type="button" id="btnAddServico">+ Adicionar serviço</button><button class="btn-primary" type="button" id="btnSalvarServicos">Salvar serviços</button><span id="servicosMensagem" class="status-message"></span></div></section>
+    <section class="portal-card"><h2>Horários</h2><div id="listaHorarios"></div><div class="portal-actions"><button class="btn-primary" type="button" id="btnSalvarHorarios">Salvar horários</button><span id="horariosMensagem" class="status-message"></span></div></section>
+</div></main>
+<script defer src="js/mecanica-dashboard.js"></script>
+</body></html>

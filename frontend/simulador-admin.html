@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Smart Fix - Simulador administrativo</title>
+    <link rel="icon" href="image/logo sFx sem fundo.jpeg">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/portal.css">
+    <link rel="stylesheet" href="css/simulador-admin.css">
+    <script defer src="js/config.js"></script>
+    <script defer src="js/sfx-core.js"></script>
+    <script defer src="js/auth-guard.js"></script>
+</head>
+<body>
+<main class="portal-page"><div class="container">
+    <div class="portal-top">
+        <div><span class="section-tag">Ferramenta de demonstração · Acesso restrito</span><h1>Simulador do veículo</h1></div>
+        <div class="portal-actions"><a class="btn-primary" href="admin.html">Voltar à administração</a><button class="btn-primary" type="button" onclick="sfxSair()">Sair</button></div>
+    </div>
+
+    <section class="sim-notice" role="note">
+        <strong>Modo de simulação</strong>
+        <span>Os valores abaixo são inseridos manualmente para a demonstração do TCC. Eles não vêm de um carro real.</span>
+    </section>
+
+    <section class="portal-card">
+        <h2>Escolha o veículo de demonstração</h2>
+        <div class="portal-form-grid">
+            <div class="full"><label for="simVeiculo">Veículo</label><select id="simVeiculo" required></select></div>
+            <div><label for="simBateria">Bateria <output id="simBateriaValor">85%</output></label><input id="simBateria" type="range" min="0" max="100" step="1" value="85"></div>
+            <div><label for="simTemperatura">Temperatura <output id="simTemperaturaValor">28 °C</output></label><input id="simTemperatura" type="range" min="-20" max="100" step="1" value="28"></div>
+            <div class="full"><label for="simVelocidade">Velocidade <output id="simVelocidadeValor">0 km/h</output></label><input id="simVelocidade" type="range" min="0" max="220" step="1" value="0"></div>
+        </div>
+        <div class="portal-actions"><button id="aplicarSimulacao" class="btn-primary" type="button" disabled>Aplicar leitura ao carro</button><a id="verPainel" class="btn-primary sim-secondary" href="dashboard.html">Ver painel do veículo</a><span id="simMensagem" class="status-message" role="status" aria-live="polite"></span></div>
+    </section>
+
+    <section class="sim-preview" aria-live="polite">
+        <article class="sim-card"><span>Bateria</span><strong id="previewBateria">85%</strong><div class="sim-meter"><i id="previewBateriaBar" style="width:85%"></i></div></article>
+        <article class="sim-card"><span>Temperatura</span><strong id="previewTemperatura">28 °C</strong><small id="estadoTemperatura">Temperatura normal</small></article>
+        <article class="sim-card"><span>Velocidade</span><strong id="previewVelocidade">0 km/h</strong><small>Leitura instantânea simulada</small></article>
+        <article class="sim-card"><span>Saúde estimada</span><strong id="previewSaude">85%</strong><small id="estadoBateria">Sem alerta</small></article>
+    </section>
+    <section id="simAlertas" class="sim-alertas" hidden></section>
+    <p class="sim-footnote">Cada envio cria uma leitura no histórico do veículo de demonstração. Abra o painel para mostrar como os indicadores e os alertas mudam.</p>
+</div></main>
+<script defer src="js/simulador-admin.js"></script>
+</body>
+</html>
