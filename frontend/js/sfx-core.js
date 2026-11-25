@@ -71,7 +71,7 @@
         }
     }
 
-    async function request(caminho, { auth = false, timeout = 15000, signal, ...opcoes } = {}) {
+    async function request(caminho, { auth = false, timeout = 65000, signal, ...opcoes } = {}) {
         const base = String(global.SFX_API_BASE_URL || '').replace(/\/+$/, '');
         if (!base) throw new ApiError('O serviço está sem conexão configurada. Entre em contato com o responsável pelo site.');
         const headers = new Headers(opcoes.headers);
