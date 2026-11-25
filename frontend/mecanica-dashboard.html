@@ -25,6 +25,12 @@
     </form>
     <section class="portal-card"><h2>Serviços oferecidos</h2><div id="listaServicos"></div><div class="portal-actions"><button class="btn-primary" type="button" id="btnAddServico">+ Adicionar serviço</button><button class="btn-primary" type="button" id="btnSalvarServicos">Salvar serviços</button><span id="servicosMensagem" class="status-message"></span></div></section>
     <section class="portal-card"><h2>Horários</h2><div id="listaHorarios"></div><div class="portal-actions"><button class="btn-primary" type="button" id="btnSalvarHorarios">Salvar horários</button><span id="horariosMensagem" class="status-message"></span></div></section>
+    <section class="portal-card">
+        <div class="portal-top"><h2>Solicitações de agendamento</h2><button class="btn-primary" type="button" id="btnAtualizarAgendamentos">Atualizar</button></div>
+        <p>Confirme ou recuse os pedidos enviados pelos clientes.</p>
+        <div id="listaAgendamentos" aria-live="polite">Carregando solicitações...</div>
+        <span id="agendamentosMensagem" class="status-message"></span>
+    </section>
 </div></main>
 <script defer src="js/mecanica-dashboard.js"></script>
 </body></html>
