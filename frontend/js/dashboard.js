@@ -371,7 +371,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const temperaturaRelatorio = document.getElementById('relatorioTempTexto');
             if (bateriaRelatorio) bateriaRelatorio.textContent = 'Sem leitura registrada';
             if (temperaturaRelatorio) temperaturaRelatorio.textContent = 'Sem leitura registrada';
-            historicoAtual = [];
+            const velocidadeRelatorio = document.getElementById('relatorioVelocidadeTexto');
+            if (velocidadeRelatorio) velocidadeRelatorio.textContent = 'Sem leitura registrada';
             renderizarAlertas([]);
             renderizarProblemas([], false);
             return;
