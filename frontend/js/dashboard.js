@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const API_BASE = window.SFX_API_BASE_URL || '';
     let grafico = null;
+    let historicoAtual = [];
 
     function getSessao() {
         if (window.Sfx?.obterSessao) return window.Sfx.obterSessao();
@@ -43,7 +44,9 @@ document.addEventListener('DOMContentLoaded', function() {
             logout();
             return null;
         }
-        return resposta.json();
+        const dados = await resposta.json();
+        if (!resposta.ok) throw new Error(dados?.erro || dados?.detail || 'Falha ao consultar o servidor (' + resposta.status + ').');
+        return dados;
     }
 
     function atualizarInterfaceUsuario(usuario) {
@@ -53,8 +56,9 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('.user-info strong').forEach(el => {
             el.textContent = usuario.nome;
         });
+        const iniciais = String(usuario.nome || 'Smart Fix').trim().split(/\s+/).slice(0, 2).map(p => p[0]).join('').toUpperCase();
         document.querySelectorAll('.user-info .avatar').forEach(el => {
-            el.textContent = usuario.avatar || 'US';
+            el.textContent = usuario.avatar || iniciais || 'SF';
         });
         document.querySelectorAll('.user-info span').forEach(el => {
             el.textContent = usuario.email;
@@ -94,6 +98,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const bateriaIcon = document.getElementById('relatorioBateriaIcon');
         const tempTexto = document.getElementById('relatorioTempTexto');
         const tempIcon = document.getElementById('relatorioTempIcon');
+        const velocidadeTexto = document.getElementById('relatorioVelocidadeTexto');
 
         const statusBateria = classificarBateria(leitura.bateria);
         if (bateriaTexto) bateriaTexto.textContent = `${leitura.bateria}% - ${statusBateria.texto}`;
@@ -110,6 +115,7 @@ document.addEventListener('DOMContentLoaded', function() {
             tempIcon.style.color = statusTemp.cor;
             tempIcon.innerHTML = `<i class="fas ${statusTemp.icone}"></i>`;
         }
+        if (velocidadeTexto) velocidadeTexto.textContent = leitura.velocidade + ' km/h na última leitura';
     }
 
     function renderizarAlertas(alertas) {
@@ -142,6 +148,66 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         container.replaceChildren(...itens);
         container.style.display = 'flex';
+    }
+
+    function renderizarProblemas(alertas, possuiLeitura) {
+        const container = document.getElementById('problemasDinamicos');
+        if (!container) return;
+        container.replaceChildren();
+        if (!possuiLeitura) {
+            const vazio = document.createElement('div');
+            vazio.className = 'diagnostico-vazio';
+            vazio.innerHTML = '<i class="fas fa-hourglass-half" aria-hidden="true"></i>';
+            const titulo = document.createElement('strong');
+            titulo.textContent = 'Aguardando leituras do veículo';
+            const texto = document.createElement('p');
+            texto.textContent = 'Assim que uma leitura for registrada, o sistema avaliará as faixas configuradas.';
+            vazio.append(titulo, texto);
+            container.append(vazio);
+            return;
+        }
+        if (!Array.isArray(alertas) || alertas.length === 0) {
+            const vazio = document.createElement('div');
+            vazio.className = 'diagnostico-vazio';
+            vazio.innerHTML = '<i class="fas fa-circle-check" aria-hidden="true"></i>';
+            const titulo = document.createElement('strong');
+            titulo.textContent = 'Nenhum alerta nas leituras mais recentes';
+            const texto = document.createElement('p');
+            texto.textContent = 'Os dados recebidos estão dentro das faixas de demonstração configuradas no sistema.';
+            vazio.append(titulo, texto);
+            container.append(vazio);
+            return;
+        }
+        const detalhes = {
+            bateria_baixa: { titulo: 'Nível de bateria baixo', classe: 'critico', icone: 'fa-battery-quarter' },
+            temperatura_alta: { titulo: 'Temperatura acima da faixa', classe: 'critico', icone: 'fa-temperature-high' },
+            temperatura_baixa: { titulo: 'Temperatura abaixo da faixa', classe: 'alerta', icone: 'fa-temperature-low' }
+        };
+        alertas.forEach(alerta => {
+            const tipo = Object.prototype.hasOwnProperty.call(detalhes, alerta.tipo) ? alerta.tipo : 'informativo';
+            const detalhe = detalhes[tipo] || { titulo: 'Ponto de atenção', classe: 'info', icone: 'fa-circle-info' };
+            const card = document.createElement('article');
+            card.className = 'problema-card ' + detalhe.classe;
+            const topo = document.createElement('div');
+            topo.className = 'problema-header';
+            const icone = document.createElement('i');
+            icone.className = 'fas ' + detalhe.icone;
+            icone.setAttribute('aria-hidden', 'true');
+            const selo = document.createElement('span');
+            selo.className = 'status-badge';
+            selo.textContent = detalhe.classe === 'critico' ? 'Atenção prioritária' : 'Atenção';
+            topo.append(icone, selo);
+            const titulo = document.createElement('h3');
+            titulo.textContent = detalhe.titulo;
+            const mensagem = document.createElement('p');
+            mensagem.textContent = alerta.mensagem || 'A leitura merece uma verificação.';
+            const acao = document.createElement('button');
+            acao.type = 'button';
+            acao.className = 'btn-agendar-mecanico';
+            acao.textContent = 'Solicitar avaliação em oficina';
+            card.append(topo, titulo, mensagem, acao);
+            container.append(card);
+        });
     }
 
     function renderizarGrafico(historico) {
@@ -203,13 +269,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const dadosBateria = historico.map(p => p.bateria);
         const dadosTemperatura = historico.map(p => p.temperatura);
-        const dadosVelocidade = historico.map(p => p.velocidade);
 
         if (grafico) {
             grafico.data.labels = labels;
             grafico.data.datasets[0].data = dadosBateria;
             grafico.data.datasets[1].data = dadosTemperatura;
-            grafico.data.datasets[2].data = dadosVelocidade;
             grafico.update();
             return;
         }
@@ -231,17 +295,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         label: 'Temperatura (°C)',
                         data: dadosTemperatura,
                         borderColor: '#ef4444',
-                        backgroundColor: '#ef444420',
+                        backgroundColor: '#ef444410',
                         tension: 0.3,
-                        fill: true
-                    },
-                    {
-                        label: 'Velocidade (km/h)',
-                        data: dadosVelocidade,
-                        borderColor: '#3b82f6',
-                        backgroundColor: '#3b82f620',
-                        tension: 0.3,
-                        fill: true
+                        fill: false,
+                        yAxisID: 'yTemperatura'
                     }
                 ]
             },
@@ -253,7 +310,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     legend: { position: 'bottom' }
                 },
                 scales: {
-                    y: { beginAtZero: true }
+                    y: { type: 'linear', position: 'left', min: 0, max: 100, title: { display: true, text: 'Bateria (%)' } },
+                    yTemperatura: { type: 'linear', position: 'right', min: -20, max: 100, grid: { drawOnChartArea: false }, title: { display: true, text: 'Temperatura (°C)' } }
                 }
             }
         });
@@ -279,12 +337,16 @@ document.addEventListener('DOMContentLoaded', function() {
             if (vazioTitulo) vazioTitulo.textContent = 'Não há veículo para consultar nesta conta';
             if (vazioTexto) vazioTexto.textContent = 'Cadastre ou selecione um veículo de demonstração para começar a registrar o monitoramento.';
             if (linkSimulador) linkSimulador.hidden = !ehAdmin;
+            historicoAtual = [];
             renderizarAlertas([]);
+            renderizarProblemas([], false);
             return;
         }
 
         const { veiculo, leituraAtual, saude, alertas, historico } = dadosDashboard;
-        renderizarGrafico(historico || [], ehAdmin);
+        historicoAtual = Array.isArray(historico) ? historico : [];
+        renderizarGrafico(historicoAtual);
+        renderizarProblemas(alertas || [], Boolean(leituraAtual));
 
         if (nomeEl) nomeEl.textContent = `${veiculo.marca} ${veiculo.modelo}`;
         if (placaAnoEl) placaAnoEl.textContent = `${veiculo.placa || 'Sem placa'} | ${veiculo.ano || '--'}`;
@@ -309,7 +371,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const temperaturaRelatorio = document.getElementById('relatorioTempTexto');
             if (bateriaRelatorio) bateriaRelatorio.textContent = 'Sem leitura registrada';
             if (temperaturaRelatorio) temperaturaRelatorio.textContent = 'Sem leitura registrada';
+            const velocidadeRelatorio = document.getElementById('relatorioVelocidadeTexto');
+            if (velocidadeRelatorio) velocidadeRelatorio.textContent = 'Sem leitura registrada';
             renderizarAlertas([]);
+            renderizarProblemas([], false);
             return;
         }
 
@@ -322,16 +387,77 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (atualizadoEm) {
             const data = new Date(leituraAtual.registrado_em);
-            atualizadoEm.textContent = `Atualizado às ${data.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}`;
+            atualizadoEm.textContent = Number.isNaN(data.getTime()) ? 'Horário indisponível' : 'Atualizado em ' + data.toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' });
         }
 
         atualizarRelatorioSemanal(leituraAtual);
         renderizarAlertas(alertas);
+        renderizarProblemas(alertas || [], true);
+    }
+
+
+    function configurarMenuMobile() {
+        const sidebar = document.getElementById('sidebar');
+        const abrir = document.getElementById('mobileMenuToggle');
+        const fundo = document.getElementById('sidebarBackdrop');
+        if (!sidebar || !abrir || !fundo) return;
+        const fechar = () => {
+            sidebar.classList.remove('open');
+            fundo.classList.remove('visible');
+            abrir.setAttribute('aria-expanded', 'false');
+            abrir.setAttribute('aria-label', 'Abrir menu');
+            const icon = abrir.querySelector('i');
+            if (icon) { icon.classList.add('fa-bars'); icon.classList.remove('fa-times'); }
+        };
+        abrir.addEventListener('click', () => {
+            const aberto = sidebar.classList.toggle('open');
+            fundo.classList.toggle('visible', aberto);
+            abrir.setAttribute('aria-expanded', String(aberto));
+            abrir.setAttribute('aria-label', aberto ? 'Fechar menu' : 'Abrir menu');
+            const icon = abrir.querySelector('i');
+            if (icon) { icon.classList.toggle('fa-bars', !aberto); icon.classList.toggle('fa-times', aberto); }
+        });
+        fundo.addEventListener('click', fechar);
+        sidebar.querySelectorAll('a').forEach(link => link.addEventListener('click', fechar));
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') fechar(); });
+    }
+
+    function exportarHistoricoCSV() {
+        if (!historicoAtual.length) {
+            alert('Ainda não existem leituras para exportar.');
+            return;
+        }
+        const cabecalho = ['Data e hora', 'Bateria (%)', 'Temperatura (C)', 'Velocidade (km/h)'];
+        const linhas = historicoAtual.map(p => [
+            new Date(p.registrado_em).toLocaleString('pt-BR'),
+            p.bateria, p.temperatura, p.velocidade
+        ]);
+        const csv = [cabecalho, ...linhas].map(linha => linha.map(valor => '"' + String(valor ?? '').replace(/"/g, '""') + '"').join(';')).join('\r\n');
+        const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'smart-fix-leituras-' + new Date().toISOString().slice(0, 10) + '.csv';
+        document.body.append(link);
+        link.click();
+        link.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+
+    function mostrarStatusDashboard(texto, estado = '') {
+        const el = document.getElementById('dashboardStatus');
+        if (!el) return;
+        el.textContent = texto || '';
+        if (estado) el.dataset.state = estado;
+        else delete el.dataset.state;
     }
 
     async function inicializar() {
         atualizarNavegacaoLateral();
         window.addEventListener('hashchange', atualizarNavegacaoLateral);
+        configurarMenuMobile();
+        const dataAtual = document.getElementById('dataAtual');
+        if (dataAtual) dataAtual.textContent = new Date().toLocaleDateString('pt-BR', { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric' });
 
         const sessao = getSessao();
 
@@ -346,13 +472,19 @@ document.addEventListener('DOMContentLoaded', function() {
             botaoSimuladorAdmin.hidden = false;
         }
 
-        const meResposta = await chamarApi('/api/auth/me', sessao.token);
-        if (!meResposta || meResposta.erro) return;
+        mostrarStatusDashboard('Conectando ao serviço de monitoramento...');
+        try {
+            const meResposta = await chamarApi('/api/auth/me', sessao.token);
+            if (!meResposta || meResposta.erro) return;
+            atualizarInterfaceUsuario(meResposta.usuario);
+            const dashboardResposta = await chamarApi('/api/dashboard?historico=20', sessao.token);
+            atualizarPainelVeiculo(dashboardResposta, sessao.papel === 'admin');
+            mostrarStatusDashboard('Dados sincronizados com o servidor.', 'success');
+        } catch (erro) {
+            mostrarStatusDashboard(erro.message || 'Não foi possível carregar os dados do veículo.', 'error');
+        }
 
-        atualizarInterfaceUsuario(meResposta.usuario);
-
-        const dashboardResposta = await chamarApi('/api/dashboard?historico=20', sessao.token);
-        atualizarPainelVeiculo(dashboardResposta, sessao.papel === 'admin');
+        document.getElementById('btnExportarRelatorio')?.addEventListener('click', exportarHistoricoCSV);
 
         const btnSair = document.querySelector('.btn-sair');
         if (btnSair) {
@@ -364,9 +496,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Atualiza os dados periodicamente (a cada 30s) para simular monitoramento em tempo real
         setInterval(async () => {
-            const dados = await chamarApi('/api/dashboard?historico=20', sessao.token);
-            atualizarPainelVeiculo(dados, sessao.papel === 'admin');
-        }, 30000);
+            if (document.hidden) return;
+            try {
+                const dados = await chamarApi('/api/dashboard?historico=20', sessao.token);
+                atualizarPainelVeiculo(dados, sessao.papel === 'admin');
+                mostrarStatusDashboard('Dados sincronizados às ' + new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }), 'success');
+            } catch (erro) {
+                mostrarStatusDashboard(erro.message || 'Falha ao atualizar os dados.', 'error');
+            }
+        }, 15000);
 
         console.log('📊 Dashboard Smart Fix (sFx) pronto!');
     }

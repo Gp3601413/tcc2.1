@@ -33,6 +33,13 @@
             <div><label for="simTemperatura">Temperatura <output id="simTemperaturaValor">28 °C</output></label><input id="simTemperatura" type="range" min="-20" max="100" step="1" value="28"></div>
             <div class="full"><label for="simVelocidade">Velocidade <output id="simVelocidadeValor">0 km/h</output></label><input id="simVelocidade" type="range" min="0" max="220" step="1" value="0"></div>
         </div>
+        <div class="sim-presets" aria-label="Cenários prontos de simulação">
+            <span>Cenários rápidos:</span>
+            <button type="button" data-preset="normal">Condição normal</button>
+            <button type="button" data-preset="bateria">Bateria baixa</button>
+            <button type="button" data-preset="temperatura">Temperatura alta</button>
+            <button type="button" data-preset="combinado">Falha combinada</button>
+        </div>
         <div class="portal-actions"><button id="aplicarSimulacao" class="btn-primary" type="button" disabled>Aplicar leitura ao carro</button><a id="verPainel" class="btn-primary sim-secondary" href="dashboard.html">Ver painel do veículo</a><span id="simMensagem" class="status-message" role="status" aria-live="polite"></span></div>
     </section>
 
@@ -40,10 +47,10 @@
         <article class="sim-card"><span>Bateria</span><strong id="previewBateria">85%</strong><div class="sim-meter"><i id="previewBateriaBar" style="width:85%"></i></div></article>
         <article class="sim-card"><span>Temperatura</span><strong id="previewTemperatura">28 °C</strong><small id="estadoTemperatura">Temperatura normal</small></article>
         <article class="sim-card"><span>Velocidade</span><strong id="previewVelocidade">0 km/h</strong><small>Leitura instantânea simulada</small></article>
-        <article class="sim-card"><span>Saúde estimada</span><strong id="previewSaude">85%</strong><small id="estadoBateria">Sem alerta</small></article>
+        <article class="sim-card"><span>Condição estimada</span><strong id="previewSaude">Normal</strong><small id="estadoBateria">Condição demonstrativa</small></article>
     </section>
     <section id="simAlertas" class="sim-alertas" hidden></section>
-    <p class="sim-footnote">Cada envio cria uma leitura no histórico do veículo de demonstração. Abra o painel para mostrar como os indicadores e os alertas mudam.</p>
+    <p class="sim-footnote">Cada envio registra uma leitura simulada no histórico do veículo selecionado. A condição exibida é didática e não representa o estado real de saúde (SOH) da bateria.</p>
 </div></main>
 <script defer src="js/simulador-admin.js"></script>
 </body>

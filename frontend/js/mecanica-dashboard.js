@@ -104,6 +104,12 @@ if (sfxExigirPapel(['mecanica', 'admin'])) {
         try {
             const dados = await api('/api/mecanica/agendamentos');
             const itens = dados.agendamentos || [];
+            const pendentes = itens.filter(a => a.status === 'Pendente').length;
+            const confirmados = itens.filter(a => a.status === 'Confirmado').length;
+            const recusados = itens.filter(a => a.status === 'Recusado').length;
+            document.getElementById('mecMetricPendentes').textContent = pendentes;
+            document.getElementById('mecMetricConfirmados').textContent = confirmados;
+            document.getElementById('mecMetricRecusados').textContent = recusados;
             listaAgendamentos.replaceChildren();
             if (!itens.length) {
                 listaAgendamentos.textContent = 'Nenhuma solicitação recebida até o momento.';
@@ -117,6 +123,7 @@ if (sfxExigirPapel(['mecanica', 'admin'])) {
                 const data = textoSeguro('p', 'Data: ' + new Date(a.dataHora).toLocaleString('pt-BR'));
                 const obs = textoSeguro('p', a.observacoes ? 'Observações: ' + a.observacoes : 'Sem observações.');
                 const status = textoSeguro('strong', 'Status: ' + a.status);
+                status.className = 'appointment-status status-' + String(a.status || '').toLowerCase();
                 card.append(titulo, email, data, obs, status);
                 if (a.status === 'Pendente') {
                     const acoes = document.createElement('div');
@@ -154,7 +161,7 @@ if (sfxExigirPapel(['mecanica', 'admin'])) {
 
     document.getElementById('btnAtualizarAgendamentos')?.addEventListener('click', carregarAgendamentos);
     carregarAgendamentos();
-    setInterval(carregarAgendamentos, 30000);
+    setInterval(() => { if (!document.hidden) carregarAgendamentos(); }, 30000);
 
     carregarPerfil();
 }

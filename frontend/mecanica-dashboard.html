@@ -11,6 +11,12 @@
 <body>
 <main class="portal-page"><div class="container">
     <div class="portal-top"><div><span class="section-tag">Área parceira</span><h1>Painel da mecânica</h1></div><button class="btn-primary" type="button" onclick="sfxSair()">Sair</button></div>
+    <section class="portal-grid mechanic-metrics" aria-label="Resumo dos agendamentos">
+        <article class="metric-card"><span><i class="fas fa-inbox"></i> Solicitações pendentes</span><strong id="mecMetricPendentes">—</strong></article>
+        <article class="metric-card"><span><i class="fas fa-calendar-check"></i> Confirmados</span><strong id="mecMetricConfirmados">—</strong></article>
+        <article class="metric-card"><span><i class="fas fa-calendar-xmark"></i> Recusados</span><strong id="mecMetricRecusados">—</strong></article>
+    </section>
+    <p class="portal-intro-note">Mantenha o perfil, os serviços e os horários atualizados para facilitar o atendimento dos clientes.</p>
     <form id="formPerfilMecanica" class="portal-card">
         <h2>Perfil público <span id="badgeStatus" class="badge"></span></h2>
         <div class="portal-form-grid">

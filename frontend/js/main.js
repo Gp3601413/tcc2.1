@@ -81,12 +81,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 titleArea.append(title, specialty);
                 header.append(icon, titleArea);
 
+                if (mec.demonstracao) {
+                    const demo = document.createElement('span');
+                    demo.className = 'oficina-demo-badge';
+                    demo.textContent = 'Oficina fictícia · Demonstração';
+                    card.append(demo);
+                }
                 const address = document.createElement('div');
                 address.className = 'info';
-                address.textContent = mec.endereco || 'Endereço não informado';
+                address.textContent = mec.demonstracao
+                    ? 'Endereço fictício: ' + (mec.endereco || 'não informado')
+                    : (mec.endereco || 'Endereço não informado');
                 const phone = document.createElement('div');
                 phone.className = 'info';
-                phone.textContent = mec.telefone || 'Telefone não informado';
+                phone.textContent = mec.telefone || (mec.demonstracao ? 'Contato ilustrativo não disponível' : 'Telefone não informado');
 
                 const footer = document.createElement('div');
                 footer.className = 'avaliacao';
@@ -101,6 +109,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     const score = document.createElement('span');
                     score.textContent = nota.toFixed(1);
                     footer.append(score);
+                    if (mec.demonstracao) {
+                        const notaDemo = document.createElement('small');
+                        notaDemo.textContent = 'nota ilustrativa';
+                        footer.append(notaDemo);
+                    }
                 }
                 const link = document.createElement('a');
                 link.className = 'btn-card';
