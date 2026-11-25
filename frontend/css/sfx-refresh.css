@@ -253,3 +253,15 @@ dialog::backdrop { background:rgba(7,19,37,.58); backdrop-filter:blur(3px); }
 @media (prefers-reduced-motion: reduce) {
   .sidebar, .sidebar-backdrop { transition:none !important; }
 }
+
+.dashboard-status { min-height:0; margin:0 0 12px; color:#64748b; font-size:12px; }
+.dashboard-status:empty { display:none; }
+.dashboard-status[data-state="error"] { padding:10px 13px; border:1px solid #fecaca; border-radius:10px; background:#fff1f2; color:#991b1b; }
+.dashboard-status[data-state="success"] { color:#166534; }
+.oficina-demo-badge {
+  display:inline-flex; width:max-content; max-width:100%; margin:0 0 8px; padding:5px 9px;
+  border-radius:999px; background:#fff4d6; color:#855600; font-size:10px; font-weight:800;
+}
+.admin-metrics { grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); }
+@media(max-width:620px) { .admin-metrics { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media(max-width:390px) { .admin-metrics { grid-template-columns:1fr; } }
