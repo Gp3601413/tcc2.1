@@ -91,6 +91,88 @@ public class AuthController : ControllerBase
         });
     }
 
+
+    [HttpPost("register-mecanica")]
+    public async Task<IActionResult> RegisterMecanica([FromBody] RegisterMecanicaRequest req)
+    {
+        if (string.IsNullOrWhiteSpace(req.NomeResponsavel) ||
+            string.IsNullOrWhiteSpace(req.Cpf) ||
+            string.IsNullOrWhiteSpace(req.Email) ||
+            string.IsNullOrWhiteSpace(req.Senha) ||
+            string.IsNullOrWhiteSpace(req.NomeMecanica) ||
+            string.IsNullOrWhiteSpace(req.Cnpj) ||
+            string.IsNullOrWhiteSpace(req.Endereco))
+        {
+            return BadRequest(new { erro = "Preencha todos os campos obrigatórios." });
+        }
+
+        if (req.Senha.Length < 6)
+            return BadRequest(new { erro = "A senha deve ter pelo menos 6 caracteres." });
+
+        var cpf = new string(req.Cpf.Where(char.IsAsciiDigit).ToArray());
+        var cnpj = new string(req.Cnpj.Where(char.IsAsciiDigit).ToArray());
+        if (cpf.Length != 11)
+            return BadRequest(new { erro = "Informe um CPF válido com 11 números." });
+        if (cnpj.Length != 14)
+            return BadRequest(new { erro = "Informe um CNPJ válido com 14 números." });
+
+        var email = req.Email.Trim().ToLowerInvariant();
+        if (await _db.Usuarios.AnyAsync(u => u.Email == email ||
+            EF.Property<string>(u, "CpfNormalizado") == cpf))
+            return Conflict(new { erro = "Já existe uma conta com esse e-mail ou CPF." });
+
+        if (await _db.Mecanicas.AnyAsync(m => m.Cnpj == cnpj))
+            return Conflict(new { erro = "Já existe uma mecânica cadastrada com esse CNPJ." });
+
+        var usuario = new Usuario
+        {
+            Id = Guid.NewGuid(),
+            Nome = req.NomeResponsavel.Trim(),
+            Cpf = cpf,
+            Email = email,
+            Telefone = req.Telefone?.Trim(),
+            SenhaHash = BCrypt.Net.BCrypt.HashPassword(req.Senha),
+            Papel = "mecanica",
+            IsAdmin = false,
+            CriadoEm = DateTime.UtcNow
+        };
+
+        var mecanica = new Mecanica
+        {
+            Id = Guid.NewGuid(),
+            UsuarioId = usuario.Id,
+            Cnpj = cnpj,
+            Nome = req.NomeMecanica.Trim(),
+            Especializacao = req.Especializacao?.Trim(),
+            Endereco = req.Endereco.Trim(),
+            Telefone = req.Telefone?.Trim(),
+            StatusAprovacao = "pendente",
+            Avaliacao = 5.0m,
+            CriadoEm = DateTime.UtcNow
+        };
+
+        await using var transacao = await _db.Database.BeginTransactionAsync();
+        _db.Usuarios.Add(usuario);
+        _db.Mecanicas.Add(mecanica);
+        await _db.SaveChangesAsync();
+        await transacao.CommitAsync();
+
+        var token = _jwt.GerarToken(usuario);
+        return StatusCode(201, new
+        {
+            token,
+            usuario = new
+            {
+                id = usuario.Id,
+                nome = usuario.Nome,
+                email = usuario.Email,
+                papel = usuario.Papel,
+                is_admin = false
+            },
+            mecanica = new { id = mecanica.Id, nome = mecanica.Nome, statusAprovacao = mecanica.StatusAprovacao }
+        });
+    }
+
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginRequest req)
     {
