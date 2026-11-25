@@ -99,4 +99,26 @@ app.UseAuthorization();
 app.MapGet("/health", () => Results.Ok(new { status = "ok", service = "SmartFixApi" }));
 app.MapControllers();
 
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    await db.Database.ExecuteSqlRawAsync("""
+        CREATE TABLE IF NOT EXISTS agendamentos (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            usuario_id CHAR(36) NOT NULL,
+            mecanica_id CHAR(36) NOT NULL,
+            servico VARCHAR(180) NOT NULL,
+            data_hora DATETIME NOT NULL,
+            observacoes TEXT NULL,
+            status VARCHAR(20) NOT NULL DEFAULT 'Pendente',
+            criado_em DATETIME(6) NOT NULL,
+            INDEX ix_agendamentos_mecanica_data (mecanica_id, data_hora),
+            INDEX ix_agendamentos_usuario_data (usuario_id, data_hora),
+            CONSTRAINT fk_agendamentos_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE,
+            CONSTRAINT fk_agendamentos_mecanica FOREIGN KEY (mecanica_id) REFERENCES mecanicas(id) ON DELETE CASCADE
+        ) ENGINE=InnoDB;
+        """);
+}
+
 app.Run();
