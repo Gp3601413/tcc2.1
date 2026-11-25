@@ -1,13 +1,26 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const form = document.getElementById('formAgendamento');
     if (!form || !window.Sfx) return;
+
     const mensagem = document.getElementById('agendamentoMensagem');
     const oficinas = document.getElementById('agendamentoMecanica');
     const lista = document.getElementById('meusAgendamentos');
     const dataHora = document.getElementById('agendamentoDataHora');
-    const agora = new Date();
-    agora.setMinutes(agora.getMinutes() - agora.getTimezoneOffset());
-    dataHora.min = agora.toISOString().slice(0, 16);
+    const dialogRapido = document.getElementById('agendamentoRapidoDialog');
+    const formRapido = document.getElementById('agendamentoRapidoForm');
+    const oficinaRapida = document.getElementById('agendamentoRapidoOficina');
+    const dataHoraRapida = document.getElementById('agendamentoRapidoDataHora');
+    const servicoRapido = document.getElementById('agendamentoRapidoServico');
+    const mensagemRapida = document.getElementById('agendamentoRapidoMensagem');
+    const botaoRapido = formRapido?.querySelector('button[type="submit"]');
+
+    function definirMinimoDataHora(input) {
+        const agoraLocal = new Date();
+        agoraLocal.setMinutes(agoraLocal.getMinutes() - agoraLocal.getTimezoneOffset());
+        input.min = agoraLocal.toISOString().slice(0, 16);
+    }
+
+    definirMinimoDataHora(dataHora);
 
     function statusTexto(status) {
         return ({ Pendente: 'Aguardando confirmação', Confirmado: 'Confirmado pela oficina', Recusado: 'Solicitação recusada' })[status] || status;
@@ -18,7 +31,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             const dados = await Sfx.request('/api/agendamentos/meus', { auth: true });
             lista.replaceChildren();
             const itens = dados.agendamentos || [];
-            if (!itens.length) { lista.textContent = 'Você ainda não possui agendamentos.'; return; }
+            if (!itens.length) {
+                lista.textContent = 'Você ainda não possui agendamentos.';
+                return;
+            }
             itens.forEach(a => {
                 const card = document.createElement('article');
                 card.className = 'agendamento-card';
@@ -31,7 +47,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 card.append(titulo, data, status);
                 lista.append(card);
             });
-        } catch (e) { lista.textContent = e.message || 'Não foi possível carregar seus agendamentos.'; }
+        } catch (e) {
+            lista.textContent = e.message || 'Não foi possível carregar seus agendamentos.';
+        }
     }
 
     try {
@@ -41,20 +59,27 @@ document.addEventListener('DOMContentLoaded', async () => {
             const nome = m.demonstracao ? m.nome + ' — FICTÍCIA / DEMONSTRAÇÃO' : m.nome;
             oficinas.add(new Option(nome, m.id));
         });
-        if (!dados.mecanicas?.length) oficinas.replaceChildren(new Option('Nenhuma oficina aprovada disponível', ''));
+        if (!dados.mecanicas?.length) {
+            oficinas.replaceChildren(new Option('Nenhuma oficina aprovada disponível', ''));
+        }
     } catch (e) {
         oficinas.replaceChildren(new Option('Erro ao carregar oficinas', ''));
         mensagem.textContent = e.message;
     }
 
+    // Formulário tradicional da seção "Agendar com IA".
     form.addEventListener('submit', async e => {
         e.preventDefault();
         mensagem.textContent = 'Enviando solicitação...';
         const local = dataHora.value;
-        if (!local || !oficinas.value) { mensagem.textContent = 'Selecione a data, horário e oficina.'; return; }
+        if (!local || !oficinas.value) {
+            mensagem.textContent = 'Selecione a data, horário e oficina.';
+            return;
+        }
         try {
             await Sfx.request('/api/agendamentos', {
-                method: 'POST', auth: true,
+                method: 'POST',
+                auth: true,
                 body: JSON.stringify({
                     mecanicaId: oficinas.value,
                     servico: document.getElementById('agendamentoServico').value,
@@ -64,26 +89,17 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
             mensagem.textContent = 'Solicitação enviada! A oficina precisa confirmar o agendamento.';
             form.reset();
-        
-    // Agendamento rápido: os botões dos cards de problemas abrem uma janela
-    // e enviam o pedido diretamente à API após a escolha de oficina e horário.
-    const dialogRapido = document.getElementById('agendamentoRapidoDialog');
-    const formRapido = document.getElementById('agendamentoRapidoForm');
-    const oficinaRapida = document.getElementById('agendamentoRapidoOficina');
-    const dataHoraRapida = document.getElementById('agendamentoRapidoDataHora');
-    const servicoRapido = document.getElementById('agendamentoRapidoServico');
-    const mensagemRapida = document.getElementById('agendamentoRapidoMensagem');
-    const botaoRapido = formRapido?.querySelector('button[type="submit"]');
+            await carregarMeus();
+        } catch (e2) {
+            mensagem.textContent = e2.message || 'Não foi possível solicitar o agendamento.';
+        }
+    });
 
-    function valorMinimoDataHora(input) {
-        const agoraLocal = new Date();
-        agoraLocal.setMinutes(agoraLocal.getMinutes() - agoraLocal.getTimezoneOffset());
-        input.min = agoraLocal.toISOString().slice(0, 16);
-    }
-
+    // Agendamento rápido a partir dos botões dos cards de problemas.
     document.querySelectorAll('.btn-agendar-mecanico').forEach(botao => {
         botao.addEventListener('click', () => {
             if (!dialogRapido || !formRapido) return;
+
             const card = botao.closest('.problema-card');
             const tituloProblema = card?.querySelector('h3')?.textContent?.trim() || 'Revisão do veículo';
             document.getElementById('agendamentoRapidoProblema').textContent =
@@ -98,9 +114,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             oficinaRapida.replaceChildren(...Array.from(oficinas.options).map(opcao =>
                 new Option(opcao.textContent, opcao.value, false, false)
             ));
-            valorMinimoDataHora(dataHoraRapida);
+            definirMinimoDataHora(dataHoraRapida);
             dataHoraRapida.value = '';
+            document.getElementById('agendamentoRapidoObs').value = '';
             mensagemRapida.textContent = '';
+
             if (botaoRapido) {
                 botaoRapido.disabled = false;
                 botaoRapido.textContent = 'Confirmar agendamento';
@@ -116,6 +134,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     formRapido?.addEventListener('submit', async evento => {
         evento.preventDefault();
+
         if (!oficinaRapida.value || !dataHoraRapida.value) {
             mensagemRapida.textContent = 'Selecione uma oficina, data e horário.';
             return;
@@ -130,6 +149,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             botaoRapido.textContent = 'Enviando...';
         }
         mensagemRapida.textContent = 'Enviando solicitação para a oficina...';
+
         try {
             await Sfx.request('/api/agendamentos', {
                 method: 'POST',
@@ -141,6 +161,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     observacoes: document.getElementById('agendamentoRapidoObs').value
                 })
             });
+
             mensagem.textContent = 'Agendamento solicitado! A oficina precisa confirmar o horário.';
             mensagemRapida.textContent = 'Solicitação enviada! A oficina precisa confirmar o horário.';
             await carregarMeus();
@@ -156,10 +177,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    await carregarMeus();
-        } catch (e2) { mensagem.textContent = e2.message || 'Não foi possível solicitar o agendamento.'; }
-    });
-
+    // Respostas rápidas da IA existente.
     document.querySelectorAll('.ia-opcoes .opcao').forEach(botao => {
         botao.addEventListener('click', () => {
             const formulario = document.querySelector('.agendar-form');
@@ -169,6 +187,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 : 'Tudo bem. Você pode continuar usando o monitoramento do Smart Fix.';
         });
     });
+
     await carregarMeus();
     setInterval(carregarMeus, 30000);
 });
