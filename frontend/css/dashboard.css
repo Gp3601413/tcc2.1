@@ -1343,3 +1343,31 @@ body {
         gap: 4px;
     }
 }
+
+
+/* Agendamentos do cliente */
+.meus-agendamentos {
+    margin-top: 22px;
+}
+.meus-agendamentos h3 {
+    margin-bottom: 12px;
+}
+.agendamento-card {
+    padding: 14px 16px;
+    margin: 10px 0;
+    border: 1px solid var(--cinza-claro);
+    border-radius: 10px;
+    background: #fff;
+}
+.agendamento-card strong {
+    color: var(--azul-escuro);
+}
+.agendamento-card p {
+    margin: 7px 0 0;
+    color: var(--cinza);
+}
+#agendamentoMensagem {
+    display: block;
+    margin-top: 10px;
+    font-weight: 600;
+}
