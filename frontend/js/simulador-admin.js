@@ -24,6 +24,7 @@ if (sfxExigirPapel(['admin'])) {
         document.getElementById('previewTemperatura').textContent = temperatura + ' °C';
         document.getElementById('previewVelocidade').textContent = velocidade + ' km/h';
         document.getElementById('previewSaude').textContent = condicao;
+        document.getElementById('previewSaude').dataset.condicao = condicaoCritica ? 'critica' : condicaoAtencao ? 'atencao' : 'normal';
         document.getElementById('estadoTemperatura').textContent = temperatura >= 40 ? 'Alta — verificar sistema térmico' : temperatura < 10 ? 'Baixa — verificar sistema térmico' : temperatura >= 35 ? 'Elevada — acompanhar' : 'Dentro da faixa normal';
         document.getElementById('estadoBateria').textContent = bateria <= 20 ? 'Carga baixa' : bateria <= 40 ? 'Carga em atenção' : 'Carga dentro da faixa';
         const barra = document.getElementById('previewBateriaBar');
