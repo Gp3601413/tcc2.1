@@ -564,5 +564,38 @@
         </div>
     </div>
 
+
+    <!-- Agendamento rápido a partir dos problemas do veículo -->
+    <dialog id="agendamentoRapidoDialog" class="agendamento-rapido-dialog" aria-labelledby="agendamentoRapidoTitulo">
+        <form id="agendamentoRapidoForm">
+            <div class="agendamento-rapido-header">
+                <div>
+                    <span class="agendamento-rapido-tag">SMART FIX</span>
+                    <h2 id="agendamentoRapidoTitulo">Agendar atendimento</h2>
+                    <p id="agendamentoRapidoProblema">Escolha a oficina e o melhor horário.</p>
+                </div>
+                <button type="button" id="fecharAgendamentoRapido" class="agendamento-rapido-fechar" aria-label="Fechar">&times;</button>
+            </div>
+            <label for="agendamentoRapidoServico">Serviço</label>
+            <select id="agendamentoRapidoServico" required>
+                <option value="Revisão de veículo elétrico">Revisão de veículo elétrico</option>
+                <option value="Diagnóstico da bateria">Diagnóstico da bateria</option>
+                <option value="Verificação do sistema térmico">Verificação do sistema térmico</option>
+                <option value="Diagnóstico elétrico">Diagnóstico elétrico</option>
+                <option value="Inspeção do sistema de freios">Inspeção do sistema de freios</option>
+            </select>
+            <label for="agendamentoRapidoOficina">Oficina</label>
+            <select id="agendamentoRapidoOficina" required>
+                <option value="">Carregando oficinas...</option>
+            </select>
+            <label for="agendamentoRapidoDataHora">Data e horário</label>
+            <input id="agendamentoRapidoDataHora" type="datetime-local" required>
+            <label for="agendamentoRapidoObs">Observações (opcional)</label>
+            <textarea id="agendamentoRapidoObs" rows="3" maxlength="1000" placeholder="Detalhes adicionais sobre o problema"></textarea>
+            <p id="agendamentoRapidoMensagem" role="status" aria-live="polite"></p>
+            <button type="submit" class="agendamento-rapido-enviar">Confirmar agendamento</button>
+        </form>
+    </dialog>
+
 </body>
 </html>
