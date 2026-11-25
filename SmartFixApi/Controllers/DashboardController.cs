@@ -70,8 +70,10 @@ public class DashboardController : ControllerBase
         {
             if (ultimaLeitura.bateria <= 20)
                 alertas.Add(new { tipo = "bateria_baixa", mensagem = "Bateria abaixo de 20%. Considere recarregar em breve." });
+            if (ultimaLeitura.temperatura < 10)
+                alertas.Add(new { tipo = "temperatura_baixa", mensagem = "Temperatura muito baixa (<10°C). Verifique as condições térmicas da bateria." });
             if (ultimaLeitura.temperatura >= 40)
-                alertas.Add(new { tipo = "temperatura_alta", mensagem = "Temperatura do sistema acima do normal (≥40°C)." });
+                alertas.Add(new { tipo = "temperatura_alta", mensagem = "Temperatura do sistema acima do limite de atenção (≥40°C)." });
 
             var penalidadeTemp = ultimaLeitura.temperatura > 40 ? (ultimaLeitura.temperatura - 40) : 0;
             saude = Math.Clamp(Math.Round(ultimaLeitura.bateria - penalidadeTemp), 0, 100);
