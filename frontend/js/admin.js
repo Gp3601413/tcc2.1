@@ -10,7 +10,9 @@ if (sfxExigirPapel(['admin'])) {
     async function carregarMetricas() {
         const metricas = await api('/api/admin/metricas');
         for (const chave of ['totalUsuarios', 'totalMecanicas', 'mecanicasPendentes', 'mecanicasBloqueadas', 'cadastrosUltimos30Dias'])
-            document.getElementById(chave).textContent = metricas[chave];
+            document.getElementById(chave).textContent = Number(metricas[chave] ?? 0).toLocaleString('pt-BR');
+        const atualizado = document.getElementById('adminAtualizadoEm');
+        if (atualizado) atualizado.textContent = new Date().toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' });
     }
 
     function controles(prefixo, pagina, temMais, carregando = false) {
