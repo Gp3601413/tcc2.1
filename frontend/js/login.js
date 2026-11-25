@@ -81,7 +81,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    function redirecionarDashboard() {
+    function redirecionarDashboard(usuario) {
+        if (usuario && usuario.papel === 'mecanica') {
+            window.location.href = 'mecanica-dashboard.html';
+            return;
+        }
         window.location.href = 'dashboard.html';
     }
 
@@ -149,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 console.log('✅ Login bem-sucedido:', dados.usuario.nome);
                 salvarSessao(dados.token, dados.usuario, lembrar);
-                redirecionarDashboard();
+                redirecionarDashboard(dados.usuario);
 
             } catch (erro) {
                 console.error('Erro de conexão:', erro);
