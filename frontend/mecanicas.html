@@ -69,13 +69,7 @@
                         <option value="4.0">4.0+ estrelas</option>
                         <option value="3.5">3.5+ estrelas</option>
                     </select>
-                    <select id="filtroDistancia">
-                        <option value="">Qualquer distância</option>
-                        <option value="5">Até 5 km</option>
-                        <option value="10">Até 10 km</option>
-                        <option value="20">Até 20 km</option>
-                        <option value="50">Até 50 km</option>
-                    </select>
+
                 </div>
             </div>
 
@@ -85,11 +79,10 @@
             </div>
 
             <!-- Paginação -->
-            <div class="paginacao">
-                <button class="btn-pagina ativo">1</button>
-                <button class="btn-pagina">2</button>
-                <button class="btn-pagina">3</button>
-                <button class="btn-pagina">Próximo →</button>
+            <div class="paginacao" aria-label="Paginação das oficinas">
+                <button class="btn-pagina" id="mecanicasAnterior" type="button" disabled>Anterior</button>
+                <span id="mecanicasPagina" aria-live="polite">Página 1</span>
+                <button class="btn-pagina" id="mecanicasProxima" type="button" disabled>Próxima</button>
             </div>
         </div>
     </section>
