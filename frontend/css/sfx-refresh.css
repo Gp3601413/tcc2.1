@@ -1,0 +1,111 @@
+/* Smart Fix — camada visual unificada (sem alterar regras de negócio) */
+:root {
+  --sfx-ink:#0b1830;
+  --sfx-ink-2:#142846;
+  --sfx-cyan:#12b8d6;
+  --sfx-cyan-dark:#0787a8;
+  --sfx-surface:#ffffff;
+  --sfx-page:#f3f7fb;
+  --sfx-line:#e3ebf2;
+  --sfx-muted:#64748b;
+  --sfx-radius:18px;
+  --sfx-shadow:0 12px 34px rgba(11,24,48,.08);
+  --sfx-shadow-hover:0 18px 42px rgba(11,24,48,.13);
+}
+html { scroll-behavior:smooth; }
+body { color:#17253b; -webkit-font-smoothing:antialiased; }
+::selection { background:rgba(18,184,214,.2); }
+:focus-visible { outline:3px solid rgba(18,184,214,.48); outline-offset:3px; }
+button, input, select, textarea { font:inherit; }
+button, a, input, select, textarea { transition:background-color .2s ease,border-color .2s ease,box-shadow .2s ease,transform .2s ease; }
+a { text-underline-offset:4px; }
+button { cursor:pointer; }
+button:disabled { cursor:not-allowed; }
+.container { width:min(1200px, calc(100% - 40px)); }
+.header { backdrop-filter:blur(14px); background:rgba(10,22,40,.96); border-bottom:1px solid rgba(255,255,255,.07); }
+.logo-img { object-fit:contain; }
+.btn-primary, .btn-secondary, .btn-login, .btn-chat, .btn-sair {
+  border-radius:12px !important; font-weight:700; letter-spacing:.01em;
+}
+.btn-primary { box-shadow:0 8px 18px rgba(0,180,216,.16); }
+.btn-primary:hover, .btn-secondary:hover { transform:translateY(-2px); }
+input:not([type=checkbox]):not([type=radio]):not([type=range]),
+select, textarea {
+  border-radius:11px;
+}
+input:not([type=checkbox]):not([type=radio]):not([type=range]):focus,
+select:focus, textarea:focus {
+  border-color:var(--sfx-cyan) !important;
+  box-shadow:0 0 0 4px rgba(18,184,214,.12);
+  outline:0;
+}
+.card, .login-box, .cadastro-form-wrapper, .mecanica-card, .filtros-mecanicas,
+.portal-card, .metric-card, .sim-card, .veiculo-card, .resumo-veiculo,
+.grafico-card, .problema-card, .agendamento-card {
+  border-radius:var(--sfx-radius) !important;
+  box-shadow:var(--sfx-shadow);
+}
+.mecanica-card:hover, .problema-card:hover, .sim-card:hover {
+  transform:translateY(-3px); box-shadow:var(--sfx-shadow-hover);
+}
+.section-tag { border-radius:999px; }
+.page-header h1, .section-header h2 { letter-spacing:-.035em; }
+.pagina-mecanicas, .portal-page { background:var(--sfx-page); }
+.mecanicas-grid { gap:22px; grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr)); }
+.mecanica-card { overflow:hidden; border:1px solid var(--sfx-line); }
+.filtros-mecanicas { border:1px solid var(--sfx-line); }
+.portal-card, .metric-card { border:1px solid var(--sfx-line); }
+.portal-top h1 { letter-spacing:-.035em; }
+.portal-card h2, .portal-card h3 { letter-spacing:-.02em; }
+.portal-table th { font-size:.78rem; text-transform:uppercase; letter-spacing:.05em; }
+.portal-table td { color:#334155; }
+.portal-table tr:hover td { background:#f8fbfd; }
+.status-message { font-size:.9rem; }
+.login-box, .cadastro-form-wrapper { border:1px solid var(--sfx-line); }
+.login-form input, .cadastro-form-wrapper input { min-height:46px; }
+.main-content { background:#f3f6fa; }
+.sidebar { box-shadow:8px 0 30px rgba(7,19,37,.10); }
+.sidebar-nav a { border-radius:12px; }
+.sidebar-nav a.active { background:linear-gradient(135deg,#0daacb,#087eaa); }
+.top-header { position:sticky; top:0; z-index:50; backdrop-filter:blur(12px); background:rgba(243,246,250,.92); border-bottom:1px solid rgba(226,232,240,.8); }
+.veiculo-card, .resumo-veiculo { border:1px solid var(--sfx-line); }
+.sim-notice { border-radius:14px; }
+.sim-card { border:1px solid var(--sfx-line); }
+dialog { border:1px solid var(--sfx-line); border-radius:20px; box-shadow:0 24px 70px rgba(7,19,37,.24); }
+dialog::backdrop { background:rgba(7,19,37,.58); backdrop-filter:blur(3px); }
+@media (max-width:900px) {
+  .container { width:min(100% - 32px,1200px); }
+  .portal-grid { gap:14px; }
+}
+@media (max-width:768px) {
+  .header .container { gap:10px; }
+  .logo-img { max-height:38px; }
+  .pagina-mecanicas { padding-top:100px; }
+  .page-header { margin-bottom:30px; }
+  .page-header h1 { font-size:clamp(28px,7vw,38px); }
+  .filtros-mecanicas { padding:16px; }
+  .mecanicas-grid { grid-template-columns:1fr; gap:16px; }
+  .portal-page { padding:94px 0 36px; }
+  .portal-top { gap:12px; }
+  .portal-actions { width:100%; }
+  .portal-actions > button, .portal-actions > a { max-width:100%; }
+  .portal-table { min-width:620px; }
+}
+@media (max-width:600px) {
+  .container { width:calc(100% - 28px); padding-left:0; padding-right:0; }
+  .hero { min-height:auto; }
+  .hero-content h1 { font-size:clamp(29px,9vw,38px); }
+  .hero-content > p { font-size:16px; }
+  .hero-stats { gap:14px; }
+  .hero-stats .stat { min-width:90px; }
+  .hero-buttons { gap:12px; }
+  .hero-buttons .btn-primary, .hero-buttons .btn-secondary { width:100%; }
+  .login-wrapper, .cadastro-wrapper { gap:18px; }
+  .login-box, .cadastro-form-wrapper { padding:22px 18px; }
+  .portal-grid { grid-template-columns:1fr; }
+  .portal-card, .metric-card { padding:17px; }
+  .portal-actions > button, .portal-actions > a { width:100%; justify-content:center; }
+}
+@media (prefers-reduced-motion:reduce) {
+  *, *::before, *::after { scroll-behavior:auto !important; animation-duration:.01ms !important; transition-duration:.01ms !important; }
+}
