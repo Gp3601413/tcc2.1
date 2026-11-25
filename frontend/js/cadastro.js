@@ -1,93 +1,50 @@
 /**
- * Smart Fix (sFx) - Cadastro
- * Envia os dados do formulário (usuário + veículo) para a API real
+ * Smart Fix (sFx) - Cadastro de cliente e veículo
  */
-
-document.addEventListener('DOMContentLoaded', function() {
-
+document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('cadastroForm');
     if (!form) return;
-
-    const btnSubmit = document.getElementById('btnCadastroSubmit');
+    const button = document.getElementById('btnCadastroSubmit');
     const errorContainer = document.getElementById('cadastroError');
     const errorMessage = document.getElementById('cadastroErrorMessage');
 
-    function mostrarErro(mensagem) {
-        errorMessage.textContent = mensagem;
+    function feedback(texto) {
+        errorMessage.textContent = texto;
         errorContainer.style.display = 'block';
         errorContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
-    function esconderErro() {
+    form.addEventListener('submit', async event => {
+        event.preventDefault();
         errorContainer.style.display = 'none';
-    }
-
-    form.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        esconderErro();
-
         const senha = document.getElementById('senha').value;
-        const confirmarSenha = document.getElementById('confirmar-senha').value;
+        const confirmar = document.getElementById('confirmar-senha').value;
+        if (senha !== confirmar) return feedback('As senhas não coincidem.');
+        if (senha.length < 6) return feedback('A senha deve ter pelo menos 6 caracteres.');
 
-        if (senha !== confirmarSenha) {
-            mostrarErro('As senhas não coincidem.');
-            return;
-        }
-        if (senha.length < 6) {
-            mostrarErro('A senha deve ter pelo menos 6 caracteres.');
-            return;
-        }
-
+        const valor = id => document.getElementById(id)?.value?.trim() ?? '';
         const payload = {
-            nome: document.getElementById('nome').value.trim(),
-            cpf: document.getElementById('cpf').value.trim(),
-            email: document.getElementById('email').value.trim().toLowerCase(),
-            telefone: document.getElementById('telefone').value.trim(),
-            senha,
-            cep: document.getElementById('cep').value.trim(),
-            cidade: document.getElementById('cidade').value.trim(),
-            estado: document.getElementById('estado').value,
-            endereco: document.getElementById('endereco').value.trim(),
-            marca: document.getElementById('marca').value,
-            modelo: document.getElementById('modelo').value.trim(),
-            ano: document.getElementById('ano').value,
-            placa: document.getElementById('placa').value.trim(),
-            bateria: document.getElementById('bateria').value || null,
-            cor: document.getElementById('cor').value
+            nome: valor('nome'), cpf: valor('cpf'), email: valor('email').toLowerCase(),
+            telefone: valor('telefone'), senha, cep: valor('cep'), cidade: valor('cidade'),
+            estado: valor('estado'), endereco: valor('endereco'), marca: valor('marca'),
+            modelo: valor('modelo'), ano: valor('ano'), placa: valor('placa'),
+            bateria: valor('bateria') || null, cor: valor('cor')
         };
 
-        btnSubmit.disabled = true;
-        btnSubmit.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Criando conta...';
-
+        const original = button.innerHTML;
+        button.disabled = true;
+        button.innerHTML = '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Criando conta...';
         try {
-            const resposta = await fetch(`${window.SFX_API_BASE_URL}/api/auth/register`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
+            const dados = await Sfx.request('/api/auth/register', {
+                method: 'POST', body: JSON.stringify(payload)
             });
-
-            const dados = await resposta.json();
-
-            if (!resposta.ok) {
-                mostrarErro(dados.erro || 'Não foi possível criar a conta.');
-                return;
-            }
-
-            // Loga automaticamente o usuário recém-criado
-            sessionStorage.setItem('sfx_usuario', JSON.stringify({
-                token: dados.token,
-                ...dados.usuario,
-                loginTimestamp: new Date().toISOString()
-            }));
-
-            window.location.href = 'dashboard.html';
-
+            Sfx.salvarSessao(dados.token, dados.usuario, false);
+            window.location.replace('dashboard.html');
         } catch (erro) {
-            console.error('Erro de conexão:', erro);
-            mostrarErro('Não foi possível conectar ao servidor. Verifique sua internet e tente novamente.');
+            feedback(erro.message || 'Não foi possível criar a conta.');
         } finally {
-            btnSubmit.disabled = false;
-            btnSubmit.innerHTML = '<i class="fas fa-user-plus"></i> Criar Conta';
+            button.disabled = false;
+            button.innerHTML = original;
         }
     });
 });
