@@ -1692,3 +1692,118 @@ body {
         grid-column: 1;
     }
 }
+
+
+/* Janela de agendamento rápido dos cards de problemas */
+.agendamento-rapido-dialog {
+    width: min(520px, calc(100% - 28px));
+    max-width: 520px;
+    max-height: calc(100vh - 32px);
+    margin: auto;
+    padding: 0;
+    overflow: auto;
+    border: 1px solid #dce8f1;
+    border-radius: 18px;
+    background: #fff;
+    color: #18324b;
+    box-shadow: 0 24px 70px rgba(10, 22, 40, .28);
+}
+.agendamento-rapido-dialog::backdrop {
+    background: rgba(5, 18, 35, .62);
+    backdrop-filter: blur(3px);
+}
+.agendamento-rapido-dialog form {
+    display: grid;
+    gap: 10px;
+    padding: 24px;
+}
+.agendamento-rapido-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 8px;
+}
+.agendamento-rapido-tag {
+    color: #0086a8;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .14em;
+}
+.agendamento-rapido-header h2 {
+    margin: 5px 0;
+    color: #0a2540;
+    font-size: 22px;
+}
+.agendamento-rapido-header p {
+    margin: 0;
+    color: #64748b;
+    font-size: 13px;
+    line-height: 1.5;
+}
+.agendamento-rapido-fechar {
+    width: 34px;
+    height: 34px;
+    border: 0;
+    border-radius: 9px;
+    background: #eef4f8;
+    color: #29445d;
+    font-size: 24px;
+    cursor: pointer;
+}
+.agendamento-rapido-dialog label {
+    margin-top: 5px;
+    color: #243b53;
+    font-size: 13px;
+    font-weight: 700;
+}
+.agendamento-rapido-dialog input,
+.agendamento-rapido-dialog select,
+.agendamento-rapido-dialog textarea {
+    width: 100%;
+    min-height: 44px;
+    padding: 10px 12px;
+    border: 1px solid #d7e2ec;
+    border-radius: 9px;
+    outline: none;
+    background: #fbfdff;
+    color: #18324b;
+    font: inherit;
+    font-size: 14px;
+}
+.agendamento-rapido-dialog textarea {
+    min-height: 76px;
+    resize: vertical;
+}
+.agendamento-rapido-dialog input:focus,
+.agendamento-rapido-dialog select:focus,
+.agendamento-rapido-dialog textarea:focus {
+    border-color: #00a6c8;
+    box-shadow: 0 0 0 3px rgba(0, 180, 216, .13);
+}
+#agendamentoRapidoMensagem {
+    min-height: 0;
+    margin: 3px 0;
+    color: #08799a;
+    font-size: 13px;
+    line-height: 1.5;
+}
+.agendamento-rapido-enviar {
+    min-height: 46px;
+    margin-top: 5px;
+    border: 0;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #00b4d8 0%, #0077b6 100%);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 750;
+    cursor: pointer;
+}
+.agendamento-rapido-enviar:disabled {
+    cursor: wait;
+    opacity: .65;
+}
+@media (max-width: 520px) {
+    .agendamento-rapido-dialog form { padding: 18px; }
+    .agendamento-rapido-header h2 { font-size: 19px; }
+}
