@@ -57,7 +57,8 @@ public class MechanicsController(AppDbContext db) : ControllerBase
                 especializacao = m.Especializacao,
                 endereco = m.Endereco,
                 telefone = m.Telefone,
-                avaliacao = m.Avaliacao
+                avaliacao = m.Avaliacao,
+                demonstracao = m.Cnpj != null && m.Cnpj.StartsWith("DEMO-SFX-")
             })
             .ToListAsync(cancellationToken);
 
