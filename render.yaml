@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: smartfix-api
+    runtime: docker
+    plan: free
+    region: ohio
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    envVars:
+      - key: ConnectionStrings__DefaultConnection
+        sync: false
+      - key: Jwt__Secret
+        sync: false
+      - key: Cors__OrigensPermitidas__0
+        value: https://smartfix-smoky.vercel.app
