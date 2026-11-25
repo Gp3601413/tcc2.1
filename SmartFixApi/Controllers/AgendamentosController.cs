@@ -22,7 +22,7 @@ public class AgendamentosController(AppDbContext db) : ControllerBase
     {
         if (!TentarObterUsuarioId(out var usuarioId)) return Unauthorized();
         if (req.MecanicaId == Guid.Empty || string.IsNullOrWhiteSpace(req.Servico) ||
-            req.Servico.Trim().Length > 180 || req.DataHora <= DateTime.Now)
+            req.Servico.Trim().Length > 180 || req.DataHora <= DateTime.UtcNow.AddHours(-3))
             return BadRequest(new { erro = "Informe uma oficina, serviço e data futura válidos." });
 
         var mecanica = await db.Mecanicas.SingleOrDefaultAsync(m =>
@@ -38,7 +38,7 @@ public class AgendamentosController(AppDbContext db) : ControllerBase
         };
         db.Agendamentos.Add(agendamento);
         await db.SaveChangesAsync(ct);
-        return CreatedAtAction(nameof(Meus), new { id = agendamento.Id }, new
+        return StatusCode(201, new
         {
             id = agendamento.Id, status = agendamento.Status, servico = agendamento.Servico,
             dataHora = agendamento.DataHora, mecanica = mecanica.Nome
