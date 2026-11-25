@@ -64,7 +64,99 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
             mensagem.textContent = 'Solicitação enviada! A oficina precisa confirmar o agendamento.';
             form.reset();
+        
+    // Agendamento rápido: os botões dos cards de problemas abrem uma janela
+    // e enviam o pedido diretamente à API após a escolha de oficina e horário.
+    const dialogRapido = document.getElementById('agendamentoRapidoDialog');
+    const formRapido = document.getElementById('agendamentoRapidoForm');
+    const oficinaRapida = document.getElementById('agendamentoRapidoOficina');
+    const dataHoraRapida = document.getElementById('agendamentoRapidoDataHora');
+    const servicoRapido = document.getElementById('agendamentoRapidoServico');
+    const mensagemRapida = document.getElementById('agendamentoRapidoMensagem');
+    const botaoRapido = formRapido?.querySelector('button[type="submit"]');
+
+    function valorMinimoDataHora(input) {
+        const agoraLocal = new Date();
+        agoraLocal.setMinutes(agoraLocal.getMinutes() - agoraLocal.getTimezoneOffset());
+        input.min = agoraLocal.toISOString().slice(0, 16);
+    }
+
+    document.querySelectorAll('.btn-agendar-mecanico').forEach(botao => {
+        botao.addEventListener('click', () => {
+            if (!dialogRapido || !formRapido) return;
+            const card = botao.closest('.problema-card');
+            const tituloProblema = card?.querySelector('h3')?.textContent?.trim() || 'Revisão do veículo';
+            document.getElementById('agendamentoRapidoProblema').textContent =
+                'Solicitação relacionada a: ' + tituloProblema;
+
+            const titulo = tituloProblema.toLowerCase();
+            if (titulo.includes('bateria')) servicoRapido.value = 'Diagnóstico da bateria';
+            else if (titulo.includes('temperatura') || titulo.includes('térmico')) servicoRapido.value = 'Verificação do sistema térmico';
+            else if (titulo.includes('freio') || titulo.includes('pastilha')) servicoRapido.value = 'Inspeção do sistema de freios';
+            else servicoRapido.value = 'Revisão de veículo elétrico';
+
+            oficinaRapida.replaceChildren(...Array.from(oficinas.options).map(opcao =>
+                new Option(opcao.textContent, opcao.value, false, false)
+            ));
+            valorMinimoDataHora(dataHoraRapida);
+            dataHoraRapida.value = '';
+            mensagemRapida.textContent = '';
+            if (botaoRapido) {
+                botaoRapido.disabled = false;
+                botaoRapido.textContent = 'Confirmar agendamento';
+            }
+            dialogRapido.showModal();
+        });
+    });
+
+    document.getElementById('fecharAgendamentoRapido')?.addEventListener('click', () => dialogRapido?.close());
+    dialogRapido?.addEventListener('click', evento => {
+        if (evento.target === dialogRapido) dialogRapido.close();
+    });
+
+    formRapido?.addEventListener('submit', async evento => {
+        evento.preventDefault();
+        if (!oficinaRapida.value || !dataHoraRapida.value) {
+            mensagemRapida.textContent = 'Selecione uma oficina, data e horário.';
+            return;
+        }
+        if (new Date(dataHoraRapida.value) <= new Date()) {
+            mensagemRapida.textContent = 'Escolha uma data e horário futuros.';
+            return;
+        }
+
+        if (botaoRapido) {
+            botaoRapido.disabled = true;
+            botaoRapido.textContent = 'Enviando...';
+        }
+        mensagemRapida.textContent = 'Enviando solicitação para a oficina...';
+        try {
+            await Sfx.request('/api/agendamentos', {
+                method: 'POST',
+                auth: true,
+                body: JSON.stringify({
+                    mecanicaId: oficinaRapida.value,
+                    servico: servicoRapido.value,
+                    dataHora: dataHoraRapida.value,
+                    observacoes: document.getElementById('agendamentoRapidoObs').value
+                })
+            });
+            mensagem.textContent = 'Agendamento solicitado! A oficina precisa confirmar o horário.';
+            mensagemRapida.textContent = 'Solicitação enviada! A oficina precisa confirmar o horário.';
             await carregarMeus();
+            formRapido.reset();
+            dialogRapido.close();
+        } catch (erro) {
+            mensagemRapida.textContent = erro.message || 'Não foi possível enviar o agendamento.';
+        } finally {
+            if (botaoRapido) {
+                botaoRapido.disabled = false;
+                botaoRapido.textContent = 'Confirmar agendamento';
+            }
+        }
+    });
+
+    await carregarMeus();
         } catch (e2) { mensagem.textContent = e2.message || 'Não foi possível solicitar o agendamento.'; }
     });
 
