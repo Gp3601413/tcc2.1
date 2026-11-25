@@ -131,6 +131,34 @@ using (var scope = app.Services.CreateScope())
             CONSTRAINT fk_agendamentos_mecanica FOREIGN KEY (mecanica_id) REFERENCES mecanicas(id) ON DELETE CASCADE
         ) ENGINE=InnoDB;
         """);
+
+    // Oficinas fictícias para demonstração do TCC. INSERT IGNORE torna a carga idempotente.
+    await db.Database.ExecuteSqlRawAsync("""
+        INSERT IGNORE INTO mecanicas
+            (id, usuario_id, cnpj, nome, especializacao, endereco, telefone,
+             latitude, longitude, avaliacao, status_aprovacao, criado_em)
+        VALUES
+            ('a1000000-0000-4000-8000-000000000001', NULL, 'DEMO-SFX-001',
+             'VoltCare Centro Automotivo', 'Veículos Elétricos',
+             'Endereço fictício — Vila Mariana, São Paulo/SP', NULL,
+             NULL, NULL, 4.8, 'aprovada', UTC_TIMESTAMP()),
+            ('a1000000-0000-4000-8000-000000000002', NULL, 'DEMO-SFX-002',
+             'Bateria Prime', 'Baterias',
+             'Endereço fictício — Pinheiros, São Paulo/SP', NULL,
+             NULL, NULL, 4.9, 'aprovada', UTC_TIMESTAMP()),
+            ('a1000000-0000-4000-8000-000000000003', NULL, 'DEMO-SFX-003',
+             'E-Motor Tech', 'Motores',
+             'Endereço fictício — Tatuapé, São Paulo/SP', NULL,
+             NULL, NULL, 4.7, 'aprovada', UTC_TIMESTAMP()),
+            ('a1000000-0000-4000-8000-000000000004', NULL, 'DEMO-SFX-004',
+             'EletroDrive Sistemas', 'Sistemas Elétricos',
+             'Endereço fictício — Moema, São Paulo/SP', NULL,
+             NULL, NULL, 4.8, 'aprovada', UTC_TIMESTAMP()),
+            ('a1000000-0000-4000-8000-000000000005', NULL, 'DEMO-SFX-005',
+             'Freio & Suspensão EV', 'Freios',
+             'Endereço fictício — Santana, São Paulo/SP', NULL,
+             NULL, NULL, 4.6, 'aprovada', UTC_TIMESTAMP());
+        """);
 }
 
 app.Run();
