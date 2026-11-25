@@ -1,5 +1,6 @@
 namespace SmartFixApi.DTOs;
 
+// DTO usado pelo endpoint publico de cadastro de oficinas.
 public class RegisterMecanicaRequest
 {
     public string NomeResponsavel { get; set; } = string.Empty;
