@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         input.min = agoraLocal.toISOString().slice(0, 16);
     }
 
-    definirMinimoDataHora(dataHora);
+    if (dataHora) definirMinimoDataHora(dataHora);
 
     function statusTexto(status) {
         return ({ Pendente: 'Aguardando confirmação', Confirmado: 'Confirmado pela oficina', Recusado: 'Solicitação recusada' })[status] || status;
@@ -43,6 +43,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const data = document.createElement('p');
                 data.textContent = new Date(a.dataHora).toLocaleString('pt-BR');
                 const status = document.createElement('p');
+                status.className = 'agendamento-status status-' + String(a.status || '').toLowerCase();
                 status.textContent = 'Status: ' + statusTexto(a.status);
                 card.append(titulo, data, status);
                 lista.append(card);
@@ -76,6 +77,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             mensagem.textContent = 'Selecione a data, horário e oficina.';
             return;
         }
+        if (new Date(local) <= new Date()) {
+            mensagem.textContent = 'Escolha uma data e horário futuros.';
+            return;
+        }
+        const botao = form.querySelector('button[type="submit"]');
+        if (botao) botao.disabled = true;
         try {
             await Sfx.request('/api/agendamentos', {
                 method: 'POST',
@@ -92,39 +99,39 @@ document.addEventListener('DOMContentLoaded', async () => {
             await carregarMeus();
         } catch (e2) {
             mensagem.textContent = e2.message || 'Não foi possível solicitar o agendamento.';
+        } finally {
+            if (botao) botao.disabled = false;
         }
     });
 
-    // Agendamento rápido a partir dos botões dos cards de problemas.
-    document.querySelectorAll('.btn-agendar-mecanico').forEach(botao => {
-        botao.addEventListener('click', () => {
-            if (!dialogRapido || !formRapido) return;
+    // Delegação de eventos: funciona também para alertas criados depois da consulta à API.
+    document.addEventListener('click', evento => {
+        const botao = evento.target.closest('.btn-agendar-mecanico');
+        if (!botao || !dialogRapido || !formRapido) return;
 
-            const card = botao.closest('.problema-card');
-            const tituloProblema = card?.querySelector('h3')?.textContent?.trim() || 'Revisão do veículo';
-            document.getElementById('agendamentoRapidoProblema').textContent =
-                'Solicitação relacionada a: ' + tituloProblema;
+        const card = botao.closest('.problema-card');
+        const tituloProblema = card?.querySelector('h3')?.textContent?.trim() || 'Revisão do veículo';
+        document.getElementById('agendamentoRapidoProblema').textContent =
+            'Solicitação relacionada a: ' + tituloProblema;
 
-            const titulo = tituloProblema.toLowerCase();
-            if (titulo.includes('bateria')) servicoRapido.value = 'Diagnóstico da bateria';
-            else if (titulo.includes('temperatura') || titulo.includes('térmico')) servicoRapido.value = 'Verificação do sistema térmico';
-            else if (titulo.includes('freio') || titulo.includes('pastilha')) servicoRapido.value = 'Inspeção do sistema de freios';
-            else servicoRapido.value = 'Revisão de veículo elétrico';
+        const titulo = tituloProblema.toLowerCase();
+        if (titulo.includes('bateria')) servicoRapido.value = 'Diagnóstico da bateria';
+        else if (titulo.includes('temperatura') || titulo.includes('térmico')) servicoRapido.value = 'Verificação do sistema térmico';
+        else if (titulo.includes('freio') || titulo.includes('pastilha')) servicoRapido.value = 'Inspeção do sistema de freios';
+        else servicoRapido.value = 'Revisão de veículo elétrico';
 
-            oficinaRapida.replaceChildren(...Array.from(oficinas.options).map(opcao =>
-                new Option(opcao.textContent, opcao.value, false, false)
-            ));
-            definirMinimoDataHora(dataHoraRapida);
-            dataHoraRapida.value = '';
-            document.getElementById('agendamentoRapidoObs').value = '';
-            mensagemRapida.textContent = '';
-
-            if (botaoRapido) {
-                botaoRapido.disabled = false;
-                botaoRapido.textContent = 'Confirmar agendamento';
-            }
-            dialogRapido.showModal();
-        });
+        oficinaRapida.replaceChildren(...Array.from(oficinas.options).map(opcao =>
+            new Option(opcao.textContent, opcao.value, false, false)
+        ));
+        if (dataHoraRapida) definirMinimoDataHora(dataHoraRapida);
+        dataHoraRapida.value = '';
+        document.getElementById('agendamentoRapidoObs').value = '';
+        mensagemRapida.textContent = '';
+        if (botaoRapido) {
+            botaoRapido.disabled = false;
+            botaoRapido.textContent = 'Confirmar agendamento';
+        }
+        dialogRapido.showModal();
     });
 
     document.getElementById('fecharAgendamentoRapido')?.addEventListener('click', () => dialogRapido?.close());
