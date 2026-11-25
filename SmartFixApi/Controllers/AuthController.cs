@@ -78,9 +78,12 @@ public class AuthController : ControllerBase
             CriadoEm = DateTime.UtcNow
         };
 
+        // Usuário e veículo são criados juntos: evita conta sem veículo se uma gravação falhar.
+        await using var transacao = await _db.Database.BeginTransactionAsync();
         _db.Usuarios.Add(usuario);
         _db.Veiculos.Add(veiculo);
         await _db.SaveChangesAsync();
+        await transacao.CommitAsync();
 
         var token = _jwt.GerarToken(usuario);
 
