@@ -70,6 +70,8 @@
             </div>
         </header>
 
+        <p id="dashboardStatus" class="dashboard-status" role="status" aria-live="polite"></p>
+
         <!-- ========== RESUMO DO VEÍCULO ========== -->
         <section class="resumo-veiculo" id="meu-veiculo">
             <div class="veiculo-card">
@@ -219,34 +221,6 @@
         </section>
 
     </main>
-
-    <!-- ========== CHAT FLUTUANTE - SUPORTE 24H ========== -->
-    <div class="chat-flutuante">
-        <button class="btn-chat-flutuante" id="btnChatFlutuante">
-            <i class="fas fa-headset"></i>
-            <span class="badge-online">24h</span>
-        </button>
-        
-        <div class="chat-flutuante-box" style="display: none;">
-            <div class="chat-header">
-                <h4>🟢 Suporte 24h</h4>
-                <button class="btn-fechar-chat">&times;</button>
-            </div>
-            <div class="chat-corpo">
-                <div class="mensagem suporte">
-                    <strong>Atendente:</strong> Olá! Em que posso ajudar?
-                </div>
-                <div class="mensagem usuario">
-                    <strong>Você:</strong> Meu carro não está carregando.
-                </div>
-            </div>
-            <div class="chat-input-flutuante">
-                <input type="text" placeholder="Digite..." />
-                <button>Enviar</button>
-            </div>
-        </div>
-    </div>
-
 
     <!-- Agendamento rápido a partir dos problemas do veículo -->
     <dialog id="agendamentoRapidoDialog" class="agendamento-rapido-dialog" aria-labelledby="agendamentoRapidoTitulo">
