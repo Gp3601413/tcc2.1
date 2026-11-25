@@ -294,3 +294,128 @@
     color: var(--sfx-cinza);
     border-color: #e8edf2;
 }
+
+
+/* Oficinas fictícias de demonstração */
+.oficinas-demo-aviso {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 15px 18px;
+    margin: 0 0 22px;
+    border: 1px solid rgba(0, 180, 216, .25);
+    border-radius: 12px;
+    background: rgba(0, 180, 216, .07);
+    color: var(--sfx-azul-escuro);
+    font-size: 13px;
+    line-height: 1.6;
+}
+.oficinas-demo-aviso i {
+    color: var(--sfx-primary);
+    margin-top: 3px;
+}
+.mecanicas-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 310px), 1fr));
+    align-items: stretch;
+}
+.mecanica-card {
+    display: flex;
+    flex-direction: column;
+    gap: 17px;
+    min-width: 0;
+    border-radius: 16px;
+}
+.oficina-card-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+.oficina-card-header .card-info {
+    min-width: 0;
+}
+.oficina-card-header .card-info h3 {
+    margin: 0 0 8px;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+}
+.oficina-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1;
+}
+.oficina-demo-badge {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(0, 180, 216, .10);
+    color: #087c98;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .02em;
+}
+.oficina-info {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 0;
+    color: var(--sfx-cinza);
+    font-size: 13px;
+    line-height: 1.5;
+}
+.oficina-info i {
+    width: 16px;
+    margin-top: 3px;
+    color: var(--sfx-primary);
+    text-align: center;
+    flex-shrink: 0;
+}
+.oficina-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-top: 15px;
+    border-top: 1px solid #e8edf2;
+}
+.oficina-avaliacao {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--sfx-azul-escuro);
+}
+.oficina-avaliacao .stars {
+    color: #e8a317;
+    letter-spacing: 1px;
+}
+.oficina-avaliacao strong {
+    font-size: 14px;
+}
+.oficina-avaliacao small {
+    color: var(--sfx-cinza);
+    font-size: 10px;
+}
+.oficina-disponivel {
+    color: #087c98;
+    font-size: 11px;
+    font-weight: 700;
+}
+.status-message {
+    grid-column: 1 / -1;
+    color: var(--sfx-cinza);
+    text-align: center;
+    padding: 28px 12px;
+}
+@media (max-width: 480px) {
+    .oficina-card-footer {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+    .oficinas-demo-aviso {
+        padding: 12px;
+        font-size: 12px;
+    }
+}
