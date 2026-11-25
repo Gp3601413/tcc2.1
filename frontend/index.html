@@ -54,18 +54,18 @@
                 </div>
                 <h1>Cuide do seu <span>Veículo Elétrico</span> com Tecnologia de Ponta</h1>
                 <p>O Smart Fix monitora em tempo real a saúde do seu carro elétrico, detecta problemas, sugere manutenções preventivas e conecta você às melhores mecânicas especializadas.</p>
-                <div class="hero-stats">
+                <div class="hero-stats" aria-label="Principais recursos">
                     <div class="stat">
-                        <span class="number">98%</span>
-                        <span class="label">Precisão</span>
+                        <span class="number">Dados</span>
+                        <span class="label">Do veículo em um painel</span>
                     </div>
                     <div class="stat">
-                        <span class="number">500+</span>
-                        <span class="label">Mecânicas</span>
+                        <span class="number">Alertas</span>
+                        <span class="label">Para condições fora do padrão</span>
                     </div>
                     <div class="stat">
-                        <span class="number">24/7</span>
-                        <span class="label">Suporte</span>
+                        <span class="number">Oficinas</span>
+                        <span class="label">Parceiras e aprovadas</span>
                     </div>
                 </div>
                 <div class="hero-buttons">
@@ -83,6 +83,7 @@
                         <img src="image/logo sFx sem fundo.jpeg" alt="sFx" />
                         <span>sFx</span>
                     </div>
+                    <span class="demo-caption">Visual ilustrativo do monitoramento</span>
                     
                     <!-- ⚠️ ATENÇÃO: Coloque sua imagem do carro aqui! -->
                     <img src="image/carroeletrico.jpg" alt="Smart Fix" class="car-image" />
@@ -194,30 +195,45 @@
         </div>
     </section>
 
-    <!-- ========== DEPOIMENTOS ========== -->
-    <section class="depoimentos">
+    <!-- ========== RECURSOS ========== -->
+    <section class="depoimentos" id="recursos">
         <div class="container">
             <div class="section-header">
-                <span class="section-tag">Depoimentos</span>
-                <h2>O que nossos <span>clientes</span> dizem</h2>
+                <span class="section-tag">Recursos da plataforma</span>
+                <h2>O que você pode fazer com o <span>Smart Fix</span></h2>
+                <p>Conheça as principais funções disponíveis na plataforma.</p>
             </div>
-            <div class="testimonials-grid" id="testimonialsGrid">
-                <!-- Depoimentos gerados pelo JavaScript -->
+            <div class="testimonials-grid recursos-grid">
+                <article class="testimonial-card recurso-card">
+                    <div class="recurso-icone"><i class="fas fa-gauge-high" aria-hidden="true"></i></div>
+                    <h3>Monitorar o veículo</h3>
+                    <p>Acompanhe bateria, temperatura e velocidade em um painel organizado.</p>
+                </article>
+                <article class="testimonial-card recurso-card">
+                    <div class="recurso-icone"><i class="fas fa-triangle-exclamation" aria-hidden="true"></i></div>
+                    <h3>Identificar alertas</h3>
+                    <p>Visualize avisos quando uma leitura estiver fora das faixas configuradas no sistema.</p>
+                </article>
+                <article class="testimonial-card recurso-card">
+                    <div class="recurso-icone"><i class="fas fa-calendar-check" aria-hidden="true"></i></div>
+                    <h3>Solicitar agendamentos</h3>
+                    <p>Encontre oficinas aprovadas e acompanhe a resposta da mecânica pelo dashboard.</p>
+                </article>
             </div>
         </div>
     </section>
 
-    <!-- ========== NEWSLETTER ========== -->
+    <!-- ========== CHAMADA PARA AÇÃO ========== -->
     <section class="newsletter">
         <div class="container">
             <div class="newsletter-content">
-                <img src="image/logo sFx sem fundo.jpeg" alt="sFx" class="logo-newsletter" />
-                <h2>Fique por dentro das <span>novidades</span></h2>
-                <p>Receba dicas, novidades e ofertas exclusivas sobre veículos elétricos</p>
-                <form class="newsletter-form" id="newsletterForm">
-                    <input type="email" placeholder="Seu melhor e-mail" required />
-                    <button type="submit" class="btn-primary">Inscrever-se</button>
-                </form>
+                <img src="image/logo sFx sem fundo.jpeg" alt="Smart Fix" class="logo-newsletter" />
+                <h2>Comece a cuidar melhor do seu <span>veículo</span></h2>
+                <p>Crie sua conta para acompanhar as leituras, consultar alertas e solicitar serviços em oficinas parceiras.</p>
+                <div class="newsletter-actions">
+                    <a href="cadastro.html" class="btn-primary"><i class="fas fa-user-plus" aria-hidden="true"></i> Criar minha conta</a>
+                    <a href="mecanicas.html" class="btn-secondary"><i class="fas fa-tools" aria-hidden="true"></i> Ver oficinas</a>
+                </div>
             </div>
         </div>
     </section>
@@ -259,19 +275,19 @@
                 <div class="footer-col">
                     <h4>Contato</h4>
                     <ul>
-                        <li><i class="fas fa-envelope"></i> contato@smartfix.com</li>
-                        <li><i class="fas fa-phone"></i> (11) 99999-9999</li>
-                        <li><i class="fas fa-map-marker-alt"></i> São Paulo, SP</li>
+                        <li><i class="fas fa-envelope"></i> Atendimento pelo formulário de contato</li>
+                        <li><i class="fas fa-headset"></i> <a href="contato.html">Fale com a equipe Smart Fix</a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 <strong style="color:var(--sfx-primary);">Smart Fix (sFx)</strong> - Todos os direitos reservados</p>
+                <p>&copy; <span id="anoAtual">2026</span> <strong style="color:var(--sfx-primary);">Smart Fix (sFx)</strong> - Projeto demonstrativo</p>
             </div>
         </div>
     </footer>
 
     <script src="js/config.js"></script>
+    <script src="js/sfx-core.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>
