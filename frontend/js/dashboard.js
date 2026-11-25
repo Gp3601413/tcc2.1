@@ -440,7 +440,15 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.append(link);
         link.click();
         link.remove();
-        URL.revokeObjectURL(url);
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+
+    function mostrarStatusDashboard(texto, estado = '') {
+        const el = document.getElementById('dashboardStatus');
+        if (!el) return;
+        el.textContent = texto || '';
+        if (estado) el.dataset.state = estado;
+        else delete el.dataset.state;
     }
 
     async function inicializar() {
@@ -463,13 +471,17 @@ document.addEventListener('DOMContentLoaded', function() {
             botaoSimuladorAdmin.hidden = false;
         }
 
-        const meResposta = await chamarApi('/api/auth/me', sessao.token);
-        if (!meResposta || meResposta.erro) return;
-
-        atualizarInterfaceUsuario(meResposta.usuario);
-
-        const dashboardResposta = await chamarApi('/api/dashboard?historico=20', sessao.token);
-        atualizarPainelVeiculo(dashboardResposta, sessao.papel === 'admin');
+        mostrarStatusDashboard('Conectando ao serviço de monitoramento...');
+        try {
+            const meResposta = await chamarApi('/api/auth/me', sessao.token);
+            if (!meResposta || meResposta.erro) return;
+            atualizarInterfaceUsuario(meResposta.usuario);
+            const dashboardResposta = await chamarApi('/api/dashboard?historico=20', sessao.token);
+            atualizarPainelVeiculo(dashboardResposta, sessao.papel === 'admin');
+            mostrarStatusDashboard('Dados sincronizados com o servidor.', 'success');
+        } catch (erro) {
+            mostrarStatusDashboard(erro.message || 'Não foi possível carregar os dados do veículo.', 'error');
+        }
 
         document.getElementById('btnExportarRelatorio')?.addEventListener('click', exportarHistoricoCSV);
 
@@ -483,8 +495,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Atualiza os dados periodicamente (a cada 30s) para simular monitoramento em tempo real
         setInterval(async () => {
-            const dados = await chamarApi('/api/dashboard?historico=20', sessao.token);
-            atualizarPainelVeiculo(dados, sessao.papel === 'admin');
+            if (document.hidden) return;
+            try {
+                const dados = await chamarApi('/api/dashboard?historico=20', sessao.token);
+                atualizarPainelVeiculo(dados, sessao.papel === 'admin');
+                mostrarStatusDashboard('Dados sincronizados às ' + new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }), 'success');
+            } catch (erro) {
+                mostrarStatusDashboard(erro.message || 'Falha ao atualizar os dados.', 'error');
+            }
         }, 15000);
 
         console.log('📊 Dashboard Smart Fix (sFx) pronto!');
