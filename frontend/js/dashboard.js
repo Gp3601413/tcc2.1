@@ -128,12 +128,19 @@ document.addEventListener('DOMContentLoaded', function() {
             temperatura_baixa: 'fa-temperature-low'
         };
 
-        container.innerHTML = alertas.map(alerta => `
-            <div class="alerta-item ${alerta.tipo}">
-                <i class="fas ${icones[alerta.tipo] || 'fa-exclamation-triangle'}"></i>
-                <span>${alerta.mensagem}</span>
-            </div>
-        `).join('');
+        const itens = alertas.map(alerta => {
+            const item = document.createElement('div');
+            const tipo = Object.prototype.hasOwnProperty.call(icones, alerta.tipo) ? alerta.tipo : 'informativo';
+            item.className = 'alerta-item ' + tipo;
+            const icone = document.createElement('i');
+            icone.className = 'fas ' + (icones[tipo] || 'fa-exclamation-triangle');
+            icone.setAttribute('aria-hidden', 'true');
+            const texto = document.createElement('span');
+            texto.textContent = alerta.mensagem || 'Foi identificado um ponto que merece atenção.';
+            item.append(icone, texto);
+            return item;
+        });
+        container.replaceChildren(...itens);
         container.style.display = 'flex';
     }
 
