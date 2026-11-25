@@ -204,10 +204,11 @@
 }
 
 /* ----- PAGINAÇÃO ----- */
-.paginacao {
+ .paginacao {
     display: flex;
+    align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 12px;
     margin-top: 40px;
     flex-wrap: wrap;
 }
@@ -274,4 +275,22 @@
         width: 100%;
         text-align: center;
     }
+}
+
+.paginacao > span {
+    min-width: 86px;
+    color: var(--sfx-azul-escuro);
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+}
+.btn-pagina:disabled {
+    cursor: not-allowed;
+    opacity: .45;
+    transform: none;
+}
+.btn-pagina:disabled:hover {
+    background: var(--sfx-branco);
+    color: var(--sfx-cinza);
+    border-color: #e8edf2;
 }
