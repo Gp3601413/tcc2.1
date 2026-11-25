@@ -17,60 +17,27 @@
 <body>
     
     <!-- ========== SIDEBAR ========== -->
-    <aside class="sidebar">
+    <aside class="sidebar" id="sidebar">
         <div class="sidebar-logo">
             <i class="fas fa-bolt"></i>
             <span>Smart Fix</span>
         </div>
         
-        <nav class="sidebar-nav">
-            <a href="#topo" class="active" aria-current="page">
-                <i class="fas fa-home"></i>
-                <span>Dashboard</span>
-            </a>
-            <a href="#meu-veiculo">
-                <i class="fas fa-car"></i>
-                <span>Meu Veículo</span>
-            </a>
-            <a href="#relatorio-semanal">
-                <i class="fas fa-file-alt"></i>
-                <span>Relatórios</span>
-                <span class="badge">Semanal</span>
-            </a>
-            <a href="#agendar-ia">
-                <i class="fas fa-calendar-check"></i>
-                <span>Agendar</span>
-                <span class="badge">IA</span>
-            </a>
-            <a href="mecanicas.html">
-                <i class="fas fa-map-marker-alt"></i>
-                <span>Oficinas</span>
-            </a>
-            <a href="#problemas-solucoes">
-                <i class="fas fa-tools"></i>
-                <span>Problemas</span>
-            </a>
-            <a href="#avaliar-mecanicos">
-                <i class="fas fa-star"></i>
-                <span>Avaliar</span>
-            </a>
-            <a href="#anti-furto">
-                <i class="fas fa-shield-alt"></i>
-                <span>Segurança</span>
-                <span class="badge danger">Anti-Furto</span>
-            </a>
-            <a href="#assistente">
-                <i class="fas fa-headset"></i>
-                <span>Assistente</span>
-            </a>
+        <nav class="sidebar-nav" aria-label="Navegação principal">
+            <a href="#topo" class="active" aria-current="page"><i class="fas fa-chart-pie"></i><span>Visão geral</span></a>
+            <a href="#meu-veiculo"><i class="fas fa-car"></i><span>Meu veículo</span></a>
+            <a href="#historico-veiculo"><i class="fas fa-chart-line"></i><span>Histórico</span></a>
+            <a href="#problemas-solucoes"><i class="fas fa-triangle-exclamation"></i><span>Alertas e diagnóstico</span></a>
+            <a href="#agendar-ia"><i class="fas fa-calendar-check"></i><span>Agendamentos</span></a>
+            <a href="mecanicas.html"><i class="fas fa-screwdriver-wrench"></i><span>Oficinas</span></a>
         </nav>
         
         <div class="sidebar-footer">
             <div class="user-info">
-                <div class="avatar">JD</div>
+                <div class="avatar" aria-hidden="true">SFX</div>
                 <div>
-                    <strong>João Silva</strong>
-                    <span>joao@email.com</span>
+                    <strong>Carregando usuário...</strong>
+                    <span> </span>
                 </div>
             </div>
             <button class="btn-sair">
@@ -78,26 +45,24 @@
             </button>
         </div>
     </aside>
+    <button class="sidebar-backdrop" id="sidebarBackdrop" type="button" aria-label="Fechar menu"></button>
 
     <!-- ========== CONTEÚDO PRINCIPAL ========== -->
     <main class="main-content" id="topo">
         
         <!-- Header -->
         <header class="top-header">
-            <h1>Dashboard</h1>
-            <div class="header-actions">
-                <button class="btn-notificacao">
-                    <i class="fas fa-bell"></i>
-                    <span class="badge">3</span>
+            <div class="top-header-title">
+                <button class="mobile-menu-toggle" id="mobileMenuToggle" type="button" aria-label="Abrir menu" aria-controls="sidebar" aria-expanded="false">
+                    <i class="fas fa-bars" aria-hidden="true"></i>
                 </button>
+                <div><span class="dashboard-eyebrow">SMART FIX · MONITORAMENTO</span><h1>Visão geral</h1></div>
+            </div>
+            <div class="header-actions">
                 <a class="btn-chat btn-simulador-admin" id="btnSimuladorAdmin" href="simulador-admin.html" hidden>
                     <i class="fas fa-sliders-h" aria-hidden="true"></i>
                     <span>Simular veículo</span>
                 </a>
-                <button class="btn-chat">
-                    <i class="fas fa-comment-dots"></i>
-                    <span>Suporte 24h</span>
-                </button>
                 <div class="data-hora">
                     <i class="fas fa-calendar"></i>
                     <span id="dataAtual"></span>
@@ -140,7 +105,7 @@
         <section id="alertasContainer" class="alertas-container" style="display:none;"></section>
 
         <!-- ========== HISTÓRICO / GRÁFICO ========== -->
-        <section class="historico-veiculo">
+        <section class="historico-veiculo" id="historico-veiculo">
             <div class="section-header">
                 <h2><i class="fas fa-chart-line"></i> Histórico de Monitoramento</h2>
                 <span class="semana" id="historicoAtualizadoEm">--</span>
@@ -157,81 +122,47 @@
             </div>
         </section>
 
-        <!-- ========== RELATÓRIO SEMANAL ========== -->
+        <!-- ========== RESUMO DAS LEITURAS ========== -->
         <section class="relatorio-semanal" id="relatorio-semanal">
             <div class="section-header">
-                <h2><i class="fas fa-file-alt"></i> Relatório Semanal</h2>
-                <span class="semana">Semana 32 - 2024</span>
+                <div><span class="dashboard-eyebrow">DADOS DISPONÍVEIS</span><h2><i class="fas fa-gauge-high"></i> Resumo das leituras</h2></div>
+                <span class="semana" id="periodoRelatorio">Últimas leituras recebidas</span>
             </div>
-            
             <div class="relatorio-grid">
                 <div class="relatorio-item">
-                    <div class="relatorio-icon" id="relatorioBateriaIcon" style="background: #22c55e20; color: #22c55e;">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <div>
-                        <h4>Bateria</h4>
-                        <p id="relatorioBateriaTexto">-- % - Carregando...</p>
-                    </div>
+                    <div class="relatorio-icon" id="relatorioBateriaIcon"><i class="fas fa-battery-half"></i></div>
+                    <div><h4>Bateria</h4><p id="relatorioBateriaTexto">Aguardando leitura</p></div>
                 </div>
                 <div class="relatorio-item">
-                    <div class="relatorio-icon" style="background: #f59e0b20; color: #f59e0b;">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <div>
-                        <h4>Óleo</h4>
-                        <p>Troca em 1.200 km</p>
-                    </div>
+                    <div class="relatorio-icon" id="relatorioTempIcon"><i class="fas fa-temperature-half"></i></div>
+                    <div><h4>Temperatura</h4><p id="relatorioTempTexto">Aguardando leitura</p></div>
                 </div>
                 <div class="relatorio-item">
-                    <div class="relatorio-icon" id="relatorioTempIcon" style="background: #3b82f620; color: #3b82f6;">
-                        <i class="fas fa-thermometer-half"></i>
-                    </div>
-                    <div>
-                        <h4>Temperatura</h4>
-                        <p id="relatorioTempTexto">-- °C - Carregando...</p>
-                    </div>
-                </div>
-                <div class="relatorio-item">
-                    <div class="relatorio-icon" style="background: #8b5cf620; color: #8b5cf6;">
-                        <i class="fas fa-road"></i>
-                    </div>
-                    <div>
-                        <h4>Quilometragem</h4>
-                        <p>+350 km esta semana</p>
-                    </div>
+                    <div class="relatorio-icon"><i class="fas fa-gauge"></i></div>
+                    <div><h4>Velocidade</h4><p id="relatorioVelocidadeTexto">Aguardando leitura</p></div>
                 </div>
             </div>
-            
-            <button class="btn-relatorio-completo">
-                <i class="fas fa-download"></i> Baixar Relatório Completo
-            </button>
+            <div class="report-actions">
+                <p>O arquivo contém somente as leituras registradas no sistema.</p>
+                <button class="btn-relatorio-completo" id="btnExportarRelatorio" type="button"><i class="fas fa-file-csv"></i> Exportar leituras (CSV)</button>
+            </div>
         </section>
 
-        <!-- ========== AGENDAR COM IA ========== -->
+        <!-- ========== AGENDAMENTOS ========== -->
         <section class="agendar-ia" id="agendar-ia">
             <div class="section-header">
-                <h2><i class="fas fa-robot"></i> Agendar com IA</h2>
-                <span class="badge-ia">Inteligência Artificial</span>
+                <h2><i class="fas fa-calendar-check"></i> Solicitar atendimento</h2>
+                <span class="badge-ia">Oficinas parceiras</span>
             </div>
             
             <div class="agendar-card">
-                <div class="ia-chat">
-                    <div class="ia-mensagem">
-                        <div class="ia-avatar">🤖</div>
-                        <div class="ia-texto">
-                            <p>Olá! Sou a IA do Smart Fix. Detectei que seu veículo precisa de uma revisão. Posso agendar para você?</p>
-                            <div class="ia-opcoes">
-                                <button class="opcao" data-opcao="sim">✅ Sim, agendar</button>
-                                <button class="opcao" data-opcao="depois">⏰ Depois</button>
-                                <button class="opcao" data-opcao="nao">❌ Não</button>
-                            </div>
-                        </div>
-                    </div>
+                <div class="agendamento-intro">
+                    <i class="fas fa-circle-info" aria-hidden="true"></i>
+                    <div><strong>Como funciona?</strong><p>Escolha o serviço, a oficina e um horário. Sua solicitação ficará pendente até a oficina confirmar ou recusar.</p></div>
                 </div>
-                
+
                 <div class="agendar-form">
-                    <h3>Agendar Serviço</h3>
+                    <h3>Solicitar serviço</h3>
                     <form id="formAgendamento">
                         <div class="form-group">
                             <label for="agendamentoServico">Tipo de serviço</label>
@@ -270,270 +201,21 @@
             </div>
         </section>
 
-        <!-- ========== PROBLEMAS E SOLUÇÕES ========== -->
+        <!-- ========== DIAGNÓSTICO DINÂMICO ========== -->
         <section class="problemas-solucoes" id="problemas-solucoes">
             <div class="section-header">
-                <h2><i class="fas fa-exclamation-triangle"></i> Problemas e Soluções</h2>
-                <a href="#" class="btn-ver-todos">Ver todos</a>
+                <div><span class="dashboard-eyebrow">ANÁLISE AUTOMÁTICA</span><h2><i class="fas fa-stethoscope"></i> Alertas e diagnóstico</h2></div>
             </div>
-            
-            <div class="problemas-grid">
-                <div class="problema-card critico">
-                    <div class="problema-header">
-                        <i class="fas fa-battery-three-quarters"></i>
-                        <span class="status-badge">Crítico</span>
-                    </div>
-                    <h3>Bateria com tensão baixa</h3>
-                    <p>A bateria está com 15% de carga. Isso pode danificar as células.</p>
-                    <div class="solucao">
-                        <i class="fas fa-lightbulb"></i>
-                        <div>
-                            <h4>Solução:</h4>
-                            <p>Recarregue imediatamente. Use um carregador rápido para evitar danos.</p>
-                            <a href="#" class="btn-diy">🛠️ Como fazer em casa</a>
-                        </div>
-                    </div>
-                    <button class="btn-agendar-mecanico">
-                        <i class="fas fa-wrench"></i> Agendar Mecânico
-                    </button>
-                </div>
-
-                <div class="problema-card alerta">
-                    <div class="problema-header">
-                        <i class="fas fa-oil-can"></i>
-                        <span class="status-badge">Alerta</span>
-                    </div>
-                    <h3>Troca de óleo recomendada</h3>
-                    <p>O óleo do motor está próximo do fim da vida útil.</p>
-                    <div class="solucao">
-                        <i class="fas fa-lightbulb"></i>
-                        <div>
-                            <h4>Solução:</h4>
-                            <p>Troque o óleo nos próximos 1.000 km. Use óleo 5W-30.</p>
-                            <a href="#" class="btn-diy">🛠️ Como fazer em casa</a>
-                        </div>
-                    </div>
-                    <button class="btn-agendar-mecanico">
-                        <i class="fas fa-wrench"></i> Agendar Mecânico
-                    </button>
-                </div>
-
-                <div class="problema-card info">
-                    <div class="problema-header">
-                        <i class="fas fa-car"></i>
-                        <span class="status-badge">Informação</span>
-                    </div>
-                    <h3>Pastilhas de freio com desgaste</h3>
-                    <p>As pastilhas estão com 40% de vida útil restante.</p>
-                    <div class="solucao">
-                        <i class="fas fa-lightbulb"></i>
-                        <div>
-                            <h4>Solução:</h4>
-                            <p>Troque em 5.000 km. Verifique também o fluido de freio.</p>
-                            <a href="#" class="btn-diy">🛠️ Como fazer em casa</a>
-                        </div>
-                    </div>
-                    <button class="btn-agendar-mecanico">
-                        <i class="fas fa-wrench"></i> Agendar Mecânico
-                    </button>
-                </div>
+            <p class="diagnostico-disclaimer">Os avisos são gerados pelas leituras recebidas e pelas faixas de demonstração configuradas no TCC. Eles não substituem uma avaliação técnica presencial.</p>
+            <div class="problemas-grid" id="problemasDinamicos" aria-live="polite">
+                <div class="diagnostico-vazio"><i class="fas fa-hourglass-half"></i><strong>Aguardando leituras</strong><p>Quando houver dados do veículo, os avisos serão exibidos aqui.</p></div>
             </div>
         </section>
 
-        <!-- ========== LOCALIZAÇÃO DE AFILIADOS ========== -->
-        <section class="afiliados">
-            <div class="section-header">
-                <h2><i class="fas fa-store"></i> Afiliados com Peças</h2>
-                <a href="#" class="btn-ver-todos">Ver no mapa</a>
-            </div>
-            
-            <div class="afiliados-grid">
-                <div class="afiliado-card">
-                    <div class="afiliado-img" style="background: #4a9eff20;">
-                        <i class="fas fa-store"></i>
-                    </div>
-                    <div class="afiliado-info">
-                        <h3>Auto Peças Elétricas</h3>
-                        <p><i class="fas fa-map-marker-alt"></i> 1.2 km - Av. Paulista, 1000</p>
-                        <p><i class="fas fa-phone"></i> (11) 99999-9999</p>
-                        <div class="estoque">
-                            <span class="disponivel">✅ Bateria 12V</span>
-                            <span class="disponivel">✅ Óleo 5W-30</span>
-                            <span class="indisponivel">❌ Pastilhas de freio</span>
-                        </div>
-                        <button class="btn-contatar">📞 Contatar</button>
-                    </div>
-                </div>
-
-                <div class="afiliado-card">
-                    <div class="afiliado-img" style="background: #22c55e20;">
-                        <i class="fas fa-store"></i>
-                    </div>
-                    <div class="afiliado-info">
-                        <h3>Mega Elétricos</h3>
-                        <p><i class="fas fa-map-marker-alt"></i> 2.8 km - Rua Augusta, 500</p>
-                        <p><i class="fas fa-phone"></i> (11) 88888-8888</p>
-                        <div class="estoque">
-                            <span class="disponivel">✅ Bateria 12V</span>
-                            <span class="indisponivel">❌ Óleo 5W-30</span>
-                            <span class="disponivel">✅ Pastilhas de freio</span>
-                        </div>
-                        <button class="btn-contatar">📞 Contatar</button>
-                    </div>
-                </div>
-
-                <div class="afiliado-card">
-                    <div class="afiliado-img" style="background: #f59e0b20;">
-                        <i class="fas fa-store"></i>
-                    </div>
-                    <div class="afiliado-info">
-                        <h3>Green Parts</h3>
-                        <p><i class="fas fa-map-marker-alt"></i> 3.5 km - Av. Brasil, 200</p>
-                        <p><i class="fas fa-phone"></i> (11) 77777-7777</p>
-                        <div class="estoque">
-                            <span class="indisponivel">❌ Bateria 12V</span>
-                            <span class="disponivel">✅ Óleo 5W-30</span>
-                            <span class="disponivel">✅ Pastilhas de freio</span>
-                        </div>
-                        <button class="btn-contatar">📞 Contatar</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ========== SISTEMA DE NOTAS ========== -->
-        <section class="sistema-notas" id="avaliar-mecanicos">
-            <div class="section-header">
-                <h2><i class="fas fa-star"></i> Avaliar Mecânicos</h2>
-            </div>
-            
-            <div class="notas-grid">
-                <div class="nota-card">
-                    <div class="mecanico-info">
-                        <div class="mecanico-avatar">EC</div>
-                        <div>
-                            <h4>EcoCar Elétricos</h4>
-                            <div class="estrelas">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                                <span>4.8</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="avaliacao-usuario">
-                        <p>Como você avalia?</p>
-                        <div class="estrelas-input">
-                            <i class="far fa-star" data-nota="1"></i>
-                            <i class="far fa-star" data-nota="2"></i>
-                            <i class="far fa-star" data-nota="3"></i>
-                            <i class="far fa-star" data-nota="4"></i>
-                            <i class="far fa-star" data-nota="5"></i>
-                        </div>
-                        <textarea placeholder="Deixe seu comentário..."></textarea>
-                        <button class="btn-enviar-nota">Enviar Avaliação</button>
-                    </div>
-                </div>
-
-                <div class="nota-card">
-                    <div class="mecanico-info">
-                        <div class="mecanico-avatar" style="background: #3b82f6;">VT</div>
-                        <div>
-                            <h4>Volt Tech</h4>
-                            <div class="estrelas">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="far fa-star"></i>
-                                <span>4.5</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="avaliacao-usuario">
-                        <p>Como você avalia?</p>
-                        <div class="estrelas-input">
-                            <i class="far fa-star" data-nota="1"></i>
-                            <i class="far fa-star" data-nota="2"></i>
-                            <i class="far fa-star" data-nota="3"></i>
-                            <i class="far fa-star" data-nota="4"></i>
-                            <i class="far fa-star" data-nota="5"></i>
-                        </div>
-                        <textarea placeholder="Deixe seu comentário..."></textarea>
-                        <button class="btn-enviar-nota">Enviar Avaliação</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ========== SISTEMA ANTI-FURTO ========== -->
-        <section class="anti-furto" id="anti-furto">
-            <div class="section-header">
-                <h2><i class="fas fa-shield-alt"></i> Sistema Anti-Furto</h2>
-                <span class="badge danger">ATIVO</span>
-            </div>
-            
-            <div class="anti-furto-card">
-                <div class="status-rastreamento">
-                    <div class="gps-status">
-                        <i class="fas fa-satellite" style="color: #22c55e;"></i>
-                        <span>GPS Conectado</span>
-                    </div>
-                    <div class="ultima-localizacao">
-                        <p><strong>Última localização:</strong> Av. Paulista, 1000 - SP</p>
-                        <p><strong>Horário:</strong> 14:32 - Hoje</p>
-                    </div>
-                </div>
-                
-                <div class="botoes-seguranca">
-                    <button class="btn-rastrear">
-                        <i class="fas fa-search-location"></i> Rastrear Agora
-                    </button>
-                    <button class="btn-bloquear" style="background: #ff1744;">
-                        <i class="fas fa-lock"></i> Bloquear Motor
-                    </button>
-                    <button class="btn-alerta">
-                        <i class="fas fa-bell"></i> Alerta de Segurança
-                    </button>
-                </div>
-                
-                <div class="historico-rastreio">
-                    <h4>Histórico de Localizações</h4>
-                    <ul>
-                        <li><span>14:32</span> Av. Paulista, 1000</li>
-                        <li><span>14:00</span> Rua Augusta, 500</li>
-                        <li><span>13:20</span> Av. Brasil, 200</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- ========== CHATBOT ========== -->
-        <section class="chatbot-section" id="assistente">
-            <div class="section-header">
-                <h2><i class="fas fa-robot"></i> Chatbot Smart Fix</h2>
-                <span class="badge-online">🟢 Online</span>
-            </div>
-            
-            <div class="chatbot-container">
-                <div class="chat-messages" id="chatMessages">
-                    <div class="mensagem bot">
-                        <div class="msg-avatar">🤖</div>
-                        <div class="msg-texto">
-                            Olá! Sou o assistente virtual do Smart Fix. Como posso ajudar você hoje?
-                            <br>
-                            <small>Ex: "Meu carro está fazendo barulho"</small>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="chat-input">
-                    <input type="text" id="chatInput" placeholder="Digite sua mensagem..." />
-                    <button id="chatSend"><i class="fas fa-paper-plane"></i></button>
-                </div>
-            </div>
+        <section class="dashboard-help" id="ajuda">
+            <div class="dashboard-help-icon"><i class="fas fa-life-ring"></i></div>
+            <div><span class="dashboard-eyebrow">PRECISA DE AJUDA?</span><h2>Encontre uma oficina ou fale com a equipe</h2><p>Consulte as oficinas parceiras disponíveis ou envie uma mensagem pela página de contato.</p></div>
+            <div class="dashboard-help-actions"><a href="mecanicas.html" class="btn-primary">Ver oficinas</a><a href="contato.html" class="btn-secondary">Falar com a equipe</a></div>
         </section>
 
     </main>
