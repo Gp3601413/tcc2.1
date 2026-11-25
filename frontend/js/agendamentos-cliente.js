@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (!itens.length) { lista.textContent = 'Você ainda não possui agendamentos.'; return; }
             itens.forEach(a => {
                 const card = document.createElement('article');
-                card.className = 'portal-card';
+                card.className = 'agendamento-card';
                 const titulo = document.createElement('strong');
                 titulo.textContent = a.servico + ' — ' + a.mecanica;
                 const data = document.createElement('p');
@@ -75,4 +75,5 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     });
     await carregarMeus();
+    setInterval(carregarMeus, 30000);
 });
