@@ -91,5 +91,70 @@ if (sfxExigirPapel(['mecanica', 'admin'])) {
         catch (e) { mensagem('horariosMensagem', e.message, true); }
     });
 
+
+    const listaAgendamentos = document.getElementById('listaAgendamentos');
+    function textoSeguro(tag, valor) {
+        const el = document.createElement(tag);
+        el.textContent = valor ?? '';
+        return el;
+    }
+
+    async function carregarAgendamentos() {
+        listaAgendamentos.textContent = 'Carregando solicitações...';
+        try {
+            const dados = await api('/api/mecanica/agendamentos');
+            const itens = dados.agendamentos || [];
+            listaAgendamentos.replaceChildren();
+            if (!itens.length) {
+                listaAgendamentos.textContent = 'Nenhuma solicitação recebida até o momento.';
+                return;
+            }
+            itens.forEach(a => {
+                const card = document.createElement('article');
+                card.className = 'portal-card';
+                const titulo = textoSeguro('h3', a.servico + ' — ' + a.cliente);
+                const email = textoSeguro('p', a.email);
+                const data = textoSeguro('p', 'Data: ' + new Date(a.dataHora).toLocaleString('pt-BR'));
+                const obs = textoSeguro('p', a.observacoes ? 'Observações: ' + a.observacoes : 'Sem observações.');
+                const status = textoSeguro('strong', 'Status: ' + a.status);
+                card.append(titulo, email, data, obs, status);
+                if (a.status === 'Pendente') {
+                    const acoes = document.createElement('div');
+                    acoes.className = 'portal-actions';
+                    const confirmar = document.createElement('button');
+                    confirmar.type = 'button'; confirmar.className = 'btn-primary'; confirmar.textContent = 'Confirmar';
+                    const recusar = document.createElement('button');
+                    recusar.type = 'button'; recusar.className = 'danger-link'; recusar.textContent = 'Recusar';
+                    confirmar.addEventListener('click', () => responderAgendamento(a.id, 'Confirmado'));
+                    recusar.addEventListener('click', () => responderAgendamento(a.id, 'Recusado'));
+                    acoes.append(confirmar, recusar);
+                    card.append(acoes);
+                }
+                listaAgendamentos.append(card);
+            });
+        } catch (e) {
+            listaAgendamentos.textContent = e.message || 'Não foi possível carregar as solicitações.';
+        }
+    }
+
+    async function responderAgendamento(id, status) {
+        const mensagemEl = document.getElementById('agendamentosMensagem');
+        try {
+            await api('/api/mecanica/agendamentos/' + encodeURIComponent(id) + '/status', {
+                method: 'PUT', body: JSON.stringify({ status })
+            });
+            mensagemEl.textContent = 'Agendamento ' + status.toLowerCase() + ' com sucesso.';
+            mensagemEl.style.color = '#087443';
+            await carregarAgendamentos();
+        } catch (e) {
+            mensagemEl.textContent = e.message;
+            mensagemEl.style.color = '#a61624';
+        }
+    }
+
+    document.getElementById('btnAtualizarAgendamentos')?.addEventListener('click', carregarAgendamentos);
+    carregarAgendamentos();
+    setInterval(carregarAgendamentos, 30000);
+
     carregarPerfil();
 }
