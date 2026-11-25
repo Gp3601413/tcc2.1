@@ -96,6 +96,7 @@ if (app.Environment.IsDevelopment())
 app.UseCors("FrontendPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
+app.MapGet("/health", () => Results.Ok(new { status = "ok", service = "SmartFixApi" }));
 app.MapControllers();
 
 app.Run();
