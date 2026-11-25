@@ -37,7 +37,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
         const dados = await Sfx.request('/api/mechanics');
         oficinas.replaceChildren(new Option('Selecione uma oficina', ''));
-        (dados.mecanicas || []).forEach(m => oficinas.add(new Option(m.nome, m.id)));
+        (dados.mecanicas || []).forEach(m => {
+            const nome = m.demonstracao ? m.nome + ' — FICTÍCIA / DEMONSTRAÇÃO' : m.nome;
+            oficinas.add(new Option(nome, m.id));
+        });
         if (!dados.mecanicas?.length) oficinas.replaceChildren(new Option('Nenhuma oficina aprovada disponível', ''));
     } catch (e) {
         oficinas.replaceChildren(new Option('Erro ao carregar oficinas', ''));
