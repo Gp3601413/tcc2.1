@@ -1807,3 +1807,64 @@ body {
     .agendamento-rapido-dialog form { padding: 18px; }
     .agendamento-rapido-header h2 { font-size: 19px; }
 }
+
+
+/* ===== Ajustes mobile complementares ===== */
+body { min-width: 320px; overflow-x: hidden; }
+.main-content { min-width: 0; }
+.main-content > section, .main-content article { min-width: 0; }
+canvas { max-width: 100%; }
+@media (max-width: 768px) {
+  .sidebar { width: 64px; }
+  .main-content { margin-left: 64px; padding: 14px 12px 92px; }
+  .top-header { align-items: flex-start; }
+  .top-header h1 { font-size: clamp(21px, 4vw, 28px); line-height: 1.2; }
+  .header-actions { flex-wrap: wrap; gap: 8px; }
+  .header-actions > * { min-height: 42px; }
+  .veiculo-card { padding: 18px 14px; }
+  .veiculo-stats { flex-wrap: wrap; gap: 14px 22px; }
+  .veiculo-stats .stat { min-width: 76px; }
+  .relatorio-semanal, .historico-veiculo, .agendar-card, .problema-card, .nota-card { padding: 16px; }
+  .problemas-grid, .notas-grid, .afiliados-grid { grid-template-columns: minmax(0, 1fr); }
+  .problema-card, .afiliado-card, .nota-card { min-width: 0; }
+  .historico-card { min-width: 0; }
+  .historico-card canvas { width: 100% !important; }
+  .chat-input, .chat-input-flutuante { min-width: 0; }
+  .chat-input input, .chat-input-flutuante input { min-width: 0; }
+}
+@media (max-width: 520px) {
+  .main-content { margin-left: 0; padding: 14px 12px 100px; }
+  .sidebar {
+    top: auto; bottom: 0; left: 0; right: 0;
+    width: 100%; height: 68px; padding: 5px 8px;
+    flex-direction: row; align-items: center;
+    box-shadow: 0 -5px 20px rgba(10, 22, 40, .16);
+  }
+  .sidebar-logo, .sidebar-footer { display: none; }
+  .sidebar-nav { width: 100%; padding: 0; }
+  .sidebar-nav nav, .sidebar-nav { display: flex; align-items: center; justify-content: space-around; }
+  .sidebar-nav a { flex: 1; min-width: 0; margin: 0; padding: 10px 4px; border-radius: 9px; }
+  .sidebar-nav a i { font-size: 19px; }
+  .sidebar-nav a span { display: none; }
+  .top-header { gap: 12px; margin-bottom: 18px; }
+  .header-actions { width: 100%; }
+  .header-actions > * { flex: 1 1 auto; }
+  .data-hora { font-size: 12px; }
+  .veiculo-info h2 { font-size: 19px; }
+  .veiculo-stats { justify-content: space-between; gap: 10px; }
+  .veiculo-stats .stat { flex: 1 1 70px; }
+  .section-header { align-items: flex-start; gap: 8px; flex-wrap: wrap; }
+  .section-header h2 { font-size: 17px; }
+  .relatorio-grid { grid-template-columns: minmax(0, 1fr); }
+  .ia-mensagem { flex-direction: column; }
+  .agendar-form { padding: 13px; }
+  .agendamento-rapido-dialog { width: calc(100% - 20px); max-height: calc(100dvh - 20px); }
+  .agendamento-rapido-dialog form { padding: 16px; }
+  .chat-flutuante { right: 14px; bottom: 82px; }
+  .chat-flutuante-box { position: fixed; left: 10px; right: 10px; bottom: 150px; width: auto; max-height: calc(100dvh - 170px); }
+}
+@media (max-width: 360px) {
+  .main-content { padding-left: 9px; padding-right: 9px; }
+  .veiculo-stats .stat span { font-size: 17px; }
+  .sidebar-nav a { padding-left: 2px; padding-right: 2px; }
+}
