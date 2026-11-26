@@ -157,3 +157,32 @@
         font-size: 11px;
     }
 }
+
+/* ===== Ajustes adicionais de responsividade Smart Fix ===== */
+html { -webkit-text-size-adjust: 100%; }
+img, video, canvas, svg { max-width: 100%; }
+input, select, textarea, button { max-width: 100%; }
+:focus-visible { outline: 3px solid rgba(0, 166, 200, .55); outline-offset: 2px; }
+
+@media (max-width: 768px) {
+  .container { width: min(100% - 32px, 100%); }
+  .portal-page { padding: 88px 0 32px; }
+  .portal-top { gap: 14px; }
+  .portal-top h1 { font-size: clamp(1.55rem, 6vw, 2rem); line-height: 1.15; }
+  .portal-actions { width: 100%; }
+  .portal-actions > * { flex: 1 1 180px; justify-content: center; text-align: center; }
+  .portal-card, .metric-card { min-width: 0; padding: 17px; }
+  .portal-table { min-width: 620px; }
+  .table-wrap { max-width: 100%; overscroll-behavior-x: contain; }
+}
+@media (max-width: 480px) {
+  .container { width: calc(100% - 24px); }
+  .portal-page { padding-top: 78px; }
+  .portal-top h1 { overflow-wrap: anywhere; }
+  .portal-actions { flex-direction: column; align-items: stretch; }
+  .portal-actions > * { width: 100%; flex: 1 1 auto; }
+  .portal-card, .metric-card { border-radius: 12px; padding: 14px; }
+  .portal-form-grid { gap: 12px; }
+  .portal-card input, .portal-card select, .portal-card textarea { min-height: 44px; font-size: 16px; }
+  .portal-table th, .portal-table td { padding: 10px 9px; font-size: 13px; }
+}
